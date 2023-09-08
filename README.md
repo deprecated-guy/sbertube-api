@@ -120,6 +120,7 @@
 
 > **Note**
 > Email not editable field
+> These method will edit your data on datatbase
 
 
 
@@ -165,7 +166,7 @@
 
 
 > **Note**
-> Email not editable field
+> This method will delete your user from database
 
 
 
