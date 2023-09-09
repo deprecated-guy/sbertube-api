@@ -10,11 +10,13 @@ import { ConfigService } from '@shared';
 import * as dotenv from 'dotenv';
 import { UserModule } from './user/user.module';
 import { JwtStrategy } from './shared/strategies';
+import { VideoModule } from './video/video.module';
 dotenv.config();
 @Module({
   imports: [
     AuthModule,
     UserModule,
+    VideoModule,
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '..', 'static'),
     }),

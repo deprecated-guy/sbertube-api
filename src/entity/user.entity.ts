@@ -12,7 +12,7 @@ import { VideoEntity } from './video.entity';
 export class UserEntity {
   @PrimaryGeneratedColumn()
   id: number;
-  @Column()
+  @Column('')
   email: string;
   @Column()
   username: string;

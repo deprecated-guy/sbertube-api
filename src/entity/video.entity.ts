@@ -5,10 +5,14 @@ import { UserEntity } from './user.entity';
 export class VideoEntity {
   @PrimaryGeneratedColumn()
   id: number;
-  @Column()
+  @Column({ default: '' })
   title: string;
-  @Column()
+  @Column({ default: '' })
+  body: string;
+  @Column({ default: '' })
   shortBody: string;
+  @Column({ default: '' })
+  path: string;
   @ManyToOne(() => UserEntity, (user) => user.videos)
-  author: string;
+  author: UserEntity;
 }

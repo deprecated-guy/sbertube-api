@@ -2,13 +2,15 @@ import {
   Body,
   Controller,
   Delete,
+  Get,
   Param,
   Put,
   Req,
   UseGuards,
 } from '@nestjs/common';
-import { UserEdit, JwtGuard, UserDelete } from '@shared';
+import { UserEdit, JwtGuard, User } from '@shared';
 import { UserService } from './user.service';
+import { UserRequest } from '@shared';
 
 @Controller('user')
 export class UserController {
@@ -16,13 +18,20 @@ export class UserController {
   @Put()
   @UseGuards(JwtGuard)
   async editUser(@Req() req: Request, @Body() data: UserEdit) {
-    console.log(data.email);
     return await this.userService.editUser(data);
   }
   @Delete()
   @UseGuards(JwtGuard)
-  async deleteUser(@Req() req: Request, @Body() data: UserDelete) {
-    console.log(data);
-    return await this.userService.deleteUser(data.username);
+  async deleteUser(@Req() req: UserRequest) {
+    return await this.userService.deleteUser(req.user);
+  }
+  @Get('account')
+  @UseGuards(JwtGuard)
+  async getCurrentUser(@Req() req: UserRequest) {
+    return await this.userService.getCurrentUser(req.user);
+  }
+  @Get(':username')
+  async getUser(@Param('username') username: string) {
+    return await this.userService.getOneUserByUsername(username);
   }
 }
