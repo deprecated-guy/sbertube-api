@@ -9,16 +9,16 @@
    1. [Register](#register)
    2. [Login](#login)
 2. User - User manipulation methods
-   1. [Get current user](#get-current-user)Authentication needed)
+   1. [Get current user](#get-current-user) (Authentication needed)
    2. [Get user by username](#get-user-by-username)
-   3. [Edit User](#edit-user)Authentication needed)
-   4. [Delete User](#delete-user)(Authentication needed)
-3. video
-   1. [Upload Video](#upload-video)(Authentication needed)
+   3. [Edit User](#edit-user) (Authentication needed)
+   4. [Delete User](#delete-user) (Authentication needed)
+3. Video - Video files manipulation methods
+   1. [Upload Video](#upload-video) (Authentication needed)
    2. [Get Video By Title](#get-video-by-title)
    3. [Get Videos](#get-all-videos)
-   4. [Edit Video](#edt-video)(Authentication needed)
-   5. [Delete Video](#delete-video)(Authentication needed)
+   4. [Edit Video](#edt-video) (Authentication needed)
+   5. [Delete Video](#delete-video) (Authentication needed)
 
 
 # Auth
