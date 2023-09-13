@@ -20,11 +20,10 @@
    4. [Edit Video](#edt-video) (Authentication needed)
    5. [Delete Video](#delete-video) (Authentication needed)
 4. Comments - Comments Manipulation methods
-   1. [Create Comment](#upload-video) (Authentication needed)
-   2. [Get Video By Title](#get-video-by-title)
-   3. [Get Videos](#get-all-videos)
-   4. [Edit Video](#edt-video) (Authentication needed)
-   5. [Delete Video](#delete-video) (Authentication needed)
+   1. [Create Comment](#create-comment) (Authentication needed)
+   2. [Get Video By Title](#get-comment-by-id)
+   3. [Edit Comment](#edit-comment) (Authentication needed)
+   4. [Delete Comment](#delete-comment) (Authentication needed)
 
 
 # Auth
@@ -521,6 +520,10 @@ fetch('api/video', {
 }
 ```
 
+# COMMENTS
+
+> **Note**
+> This section dedicated to creating and authorizing users
 
 ## Create Comment
 
@@ -531,7 +534,7 @@ fetch('api/video', {
 
 
 ```http request
-   POST api/commantss
+   POST api/commants
 ```
 
 
@@ -543,7 +546,7 @@ fetch('api/video', {
 
 
 ```javascript
-fetch('api/video', {
+fetch('api/comments', {
   body: {
     video: {
       title: "123",
@@ -570,7 +573,7 @@ fetch('api/video', {
 
 
 ```http request
-   DELETE api/commants/:id
+   GET api/commants/:id
 ```
 
 
@@ -590,27 +593,13 @@ fetch('api/commants/1', {
 
 ```JSON
  {
-   "video": {
+   "comment": {
       "id": 1,
       "title": "123",
       "body": "123",
       "author": {
-         "id": 2,
-         "email": "1234@mail.ru",
-         "username": "test",
-         "password": "$2b$10$5/DK9tMXP3OTGhMT3Sdw4e1OXa0OzhYH3A7o5jtAiHF5hEY0X.mFS",
-         "checkPassword": "$2b$10$I2X7aWAgpeU.MOY3hMpRNu9MYaJ0FbitzUVny1qxzpBsx.F7EPvfe",
-         "token": "...",
-         "videos": [
-            {
-               "id": 1,
-               "title": "123",
-               "body": "123",
-               "shortBody": "123",
-               "path": "static/video/Screencast 2023-09-05 22:13:25.avi",
-               ...
-            }
-         ],
+       ...
+      },
          "commentedVideo": {
             "id": 1,
             "title": "test",
@@ -646,37 +635,7 @@ fetch('api/commants/1', {
 ## Returned Object
 
 ```JSON
-{
-   "comment": {
-      "id": 1,
-      "title": "test",
-      "body": "test",
-      "author": {
-         "id": 2,
-         "email": "1234@mail.ru",
-         "username": "test",
-         "password": "$2b$10$5/DK9tMXP3OTGhMT3Sdw4e1OXa0OzhYH3A7o5jtAiHF5hEY0X.mFS",
-         "checkPassword": "$2b$10$I2X7aWAgpeU.MOY3hMpRNu9MYaJ0FbitzUVny1qxzpBsx.F7EPvfe",
-         "token": "...",
-         "videos": [
-            {
-               "id": 1,
-               "title": "123",
-               "body": "123",
-               "shortBody": "123",
-               "path": "static/video/Screencast 2023-09-05 22:13:25.avi",
-               ...
-            }
-         ],
-         "commentedVideo": {
-            "id": 1,
-            "title": "test",
-            "body": "test",
-            ...
-         }
-      }
-   }
-}
+
 ```
 
 
@@ -712,7 +671,37 @@ fetch('api/commants/1', {
 
 ## Returned Object
 
-```JavaScript
- // Return nothing
+```JSON
+ {
+   "comment": {
+      "id": 1,
+              "title": "test",
+              "body": "test",
+              "author": {
+         "id": 2,
+                 "email": "1234@mail.ru",
+                 "username": "test",
+                 "password": "$2b$10$5/DK9tMXP3OTGhMT3Sdw4e1OXa0OzhYH3A7o5jtAiHF5hEY0X.mFS",
+                 "checkPassword": "$2b$10$I2X7aWAgpeU.MOY3hMpRNu9MYaJ0FbitzUVny1qxzpBsx.F7EPvfe",
+                 "token": "...",
+                 "videos": [
+            {
+               "id": 1,
+               "title": "123",
+               "body": "123",
+               "shortBody": "123",
+               "path": "static/video/Screencast 2023-09-05 22:13:25.avi",
+               ...
+            }
+         ],
+                 "commentedVideo": {
+            "id": 1,
+                    "title": "test",
+                    "body": "test",
+         ...
+         }
+      }
+   }
+}
 ```
 
