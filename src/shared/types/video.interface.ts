@@ -1,4 +1,5 @@
 import { User } from '../dto';
+import {Comment} from "./comment.interface";
 
 export interface Video {
   id: number;
@@ -7,4 +8,5 @@ export interface Video {
   shortBody: string;
   path: string;
   author: User;
+  comments: Comment[]
 }

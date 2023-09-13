@@ -2,7 +2,7 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UserEntity, VideoEntity } from '@entity';
 import { Repository } from 'typeorm';
-import { User, UserRequest, Video } from '@shared';
+import {Comment, User, UserRequest, Video} from '@shared';
 
 import { VideoDto } from '../shared/types/video.dto';
 let id = 0;
@@ -39,6 +39,7 @@ export class VideoService {
         title: body.title,
         path: file.path,
         author: user,
+        comments: []
       };
       const newFile = this.videoRepo.create(newVideo);
       user.videos.push(newFile);
@@ -85,6 +86,7 @@ export class VideoService {
       title: body.title,
       path: file.path,
       author: user,
+      comments: file.comments
     };
     await this.videoRepo.update(file.id, {
       id: updatedVideo.id,
@@ -121,7 +123,8 @@ export class VideoService {
       video: {
         ...other,
         author: author as unknown as User,
-      },
+        comments: other.comments as unknown as Comment[]
+      }
     };
   }
 }

@@ -1,4 +1,4 @@
-import { Video } from '@shared';
+import { Video, Comment } from '@shared';
 
 export class VideoDto {
   video: Video;

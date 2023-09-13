@@ -19,6 +19,11 @@
    3. [Get Videos](#get-all-videos)
    4. [Edit Video](#edt-video) (Authentication needed)
    5. [Delete Video](#delete-video) (Authentication needed)
+4. Comments - Comments Manipulation methods
+   1. [Create Comment](#create-comment) (Authentication needed)
+   2. [Get Video By Title](#get-comment-by-id)
+   3. [Edit Comment](#edit-comment) (Authentication needed)
+   4. [Delete Comment](#delete-comment) (Authentication needed)
 
 
 # Auth
@@ -515,34 +520,40 @@ fetch('api/video', {
 }
 ```
 
+# COMMENTS
 
-## Delete Video
+> **Note**
+> This section dedicated to creating and authorizing users
+
+## Create Comment
 
 > **Required**
 > Authentication required
 
-> Type: PUT
+> Type: POST
 
 
 ```http request
-   DELETE api/video
+   POST api/commants
 ```
 
 
 ## Expected Values
-| # | naming | type   | specs       |
-|---|--------|--------|-------------|
-| 1 | title  | string | video title |
+| # | naming | type   | specs         |
+|---|--------|--------|---------------|
+| 1 | title  | string | comment title |
+| 2 | body   | string | comment body  |
 
 
 ```javascript
-fetch('api/video', {
+fetch('api/comments', {
   body: {
     video: {
-      title: "123"
+      title: "123",
+      body: "123",
     }
-  }
-   method: 'DELETE',
+  },
+   method: 'POST',
    headers: {
     Authentication: 'Beqrer 123'
    }
@@ -553,3 +564,144 @@ fetch('api/video', {
 ## Returned Object
 
 ### these method not returns any value
+
+## Get Comment By Id
+
+
+
+> Type: GET
+
+
+```http request
+   GET api/commants/:id
+```
+
+
+
+
+```javascript
+fetch('api/commants/1', {
+   method: 'GET',
+   headers: {
+    Authentication: 'Beqrer 123'
+   }
+});
+```
+
+
+## Returned Object
+
+```JSON
+ {
+   "comment": {
+      "id": 1,
+      "title": "123",
+      "body": "123",
+      "author": {
+       ...
+      },
+         "commentedVideo": {
+            "id": 1,
+            "title": "test",
+            "body": "test",
+            ...
+         }
+      }
+   }
+}
+```
+
+
+## Expected Values
+No needed fields
+
+# Delete Comment
+
+>**Required**
+> Authentication Required
+
+> Type: GET
+```javascript
+fetch('api/commants/1', {
+  
+   method: 'DELETE',
+   headers: {
+    Authentication: 'Beqrer 123'
+   }
+});
+```
+
+
+## Returned Object
+
+```JSON
+
+```
+
+
+# Edit Comment
+
+>**Required**
+> Authentication Required
+
+> Type: PUT
+
+
+## Expected values
+
+| # | naming | type   | specs         |
+|---|--------|--------|---------------|
+| 1 | title  | string | comment title |
+| 2 | body   | string | comment body  |
+
+
+```javascript
+fetch('api/commants/1', {
+  body: {
+    title: 'test',
+    body: 'test' 
+  },
+   method: 'PUT',
+   headers: {
+    Authentication: 'Beqrer 123'
+   }
+});
+```
+
+
+## Returned Object
+
+```JSON
+ {
+   "comment": {
+      "id": 1,
+              "title": "test",
+              "body": "test",
+              "author": {
+         "id": 2,
+                 "email": "1234@mail.ru",
+                 "username": "test",
+                 "password": "$2b$10$5/DK9tMXP3OTGhMT3Sdw4e1OXa0OzhYH3A7o5jtAiHF5hEY0X.mFS",
+                 "checkPassword": "$2b$10$I2X7aWAgpeU.MOY3hMpRNu9MYaJ0FbitzUVny1qxzpBsx.F7EPvfe",
+                 "token": "...",
+                 "videos": [
+            {
+               "id": 1,
+               "title": "123",
+               "body": "123",
+               "shortBody": "123",
+               "path": "static/video/Screencast 2023-09-05 22:13:25.avi",
+               ...
+            }
+         ],
+                 "commentedVideo": {
+            "id": 1,
+                    "title": "test",
+                    "body": "test",
+         ...
+         }
+      }
+   }
+}
+```
+
