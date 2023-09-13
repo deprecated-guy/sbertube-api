@@ -2,7 +2,7 @@ import {HttpException, HttpStatus, Injectable} from "@nestjs/common";
 import {InjectRepository} from "@nestjs/typeorm";
 import {CommentEntity, UserEntity, VideoEntity} from "@entity";
 import {Repository} from "typeorm";
-import {CommentInput} from "../shared/types/comment-input.interface";
+import {CommentInput} from "@shared";
 import {CommentDto} from "../shared/dto/commant.dto";
 import {VideoDto} from "../shared/types/video.dto";
 import {User, Video} from "@shared";
@@ -16,8 +16,8 @@ export class CommentService {
         ) {
     }
 
-    public async getAll() {
-        return await this.commentRepo.find()
+    public async getById(id: number) {
+        return await this.commentRepo.findOneBy({id})
     }
     public async createComment(comment: CommentInput) {
         const newComment = await this.commentRepo.create(comment);
@@ -57,6 +57,6 @@ export class CommentService {
                 author: entity.author as unknown as User
             }
         }
-
     }
+
 }

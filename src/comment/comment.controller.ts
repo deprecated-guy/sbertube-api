@@ -7,9 +7,9 @@ import {from, of} from "rxjs";
 export class CommentController {
     constructor(private commentService: CommentService) {
     }
-    @Get()
-      getComments() {
-        return from(this.commentService.getAll())
+    @Get(':id')
+      getCommentById(@Param('id') id: number) {
+        return from(this.commentService.getById(id))
     }
     @UseGuards(JwtGuard)
     @Post()
