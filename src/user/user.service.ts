@@ -16,7 +16,7 @@ export class UserService {
       where: {
         email: data.email,
       },
-      relations: ['videos'],
+      relations: ['videos', 'videos'],
     });
     if (!user) {
       throw new HttpException('User Not Found', HttpStatus.NOT_FOUND);
@@ -31,7 +31,7 @@ export class UserService {
     await this.userRepo.save(user);
     const editedUser = await this.userRepo.findOne({
       where: { email: user.email },
-      relations: ['videos'],
+      relations: ['videos', 'videos'],
     });
     return this.makeDto(editedUser);
   }
@@ -59,7 +59,7 @@ export class UserService {
       where: {
         username,
       },
-      relations: ['videos'],
+      relations: ['videos', 'videos'],
     });
     if (!user) throw new HttpException('Not Found', HttpStatus.NOT_FOUND);
     return this.makeDto(user);
@@ -67,7 +67,7 @@ export class UserService {
   public async getCurrentUser(userData: User) {
     const user = await this.userRepo.findOne({
       where: { id: userData.user.id },
-      relations: ['videos'],
+        relations: ['videos', 'videos'],
     });
     if (!user) throw new HttpException('Not Found', HttpStatus.NOT_FOUND);
     return this.makeDto(user);

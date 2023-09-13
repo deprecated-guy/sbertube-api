@@ -7,6 +7,7 @@ import {
 } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 import { VideoEntity } from './video.entity';
+import {CommentEntity} from "./comment.entity";
 
 @Entity('user')
 export class UserEntity {
@@ -24,6 +25,8 @@ export class UserEntity {
   videos: VideoEntity[];
   @Column()
   token: string;
+  @OneToMany(() => CommentEntity, (comment) => comment.author)
+  comments: CommentEntity[]
 
   @BeforeInsert()
   async hash() {
