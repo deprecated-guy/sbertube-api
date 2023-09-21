@@ -9,37 +9,36 @@ import { JwtModule } from '@nestjs/jwt';
 import { ConfigService } from '@shared';
 import * as dotenv from 'dotenv';
 import { UserModule } from './user/user.module';
-import { JwtStrategy } from './shared/strategies';
 import { VideoModule } from './video/video.module';
-import {CommentModule} from "./comment/comment.module";
+import { CommentModule } from './comment/comment.module';
 dotenv.config();
 @Module({
-  imports: [
-    AuthModule,
-    UserModule,
-    VideoModule,
-      CommentModule,
-    ServeStaticModule.forRoot({
-      rootPath: join(__dirname, '..', 'static'),
-    }),
-    JwtModule.register({
-      secretOrPrivateKey: process.env.SECRET,
-      global: true,
-      signOptions: {
-        expiresIn: process.env.EXPIRES_IN,
-      },
-    }),
-    TypeOrmModule.forRoot({
-      database: 'sbertube2',
-      type: 'mysql',
-      username: 'root',
-      host: 'localhost',
-      port: 3306,
-      entities: ['dist/**/*.entity.js'],
-      synchronize: true,
-    }),
-  ],
-  controllers: [AppController],
-  providers: [AppService, ConfigService],
+	imports: [
+		AuthModule,
+		UserModule,
+		VideoModule,
+		CommentModule,
+		ServeStaticModule.forRoot({
+			rootPath: join(__dirname, '..', 'static'),
+		}),
+		JwtModule.register({
+			secretOrPrivateKey: process.env.SECRET,
+			global: true,
+			signOptions: {
+				expiresIn: process.env.EXPIRES_IN,
+			},
+		}),
+		TypeOrmModule.forRoot({
+			database: 'sbertube3',
+			type: 'mysql',
+			username: 'root',
+			host: 'localhost',
+			port: 3306,
+			entities: ['dist/**/*.entity.js'],
+			synchronize: true,
+		}),
+	],
+	controllers: [AppController],
+	providers: [AppService, ConfigService],
 })
 export class AppModule {}

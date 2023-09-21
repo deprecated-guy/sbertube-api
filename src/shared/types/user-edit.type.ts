@@ -1,3 +1,12 @@
-import { UserRegister } from '@shared';
+import { ApiProperty } from '@nestjs/swagger';
 
-export type UserEdit = Exclude<UserRegister, 'checkPassword' & 'id' & 'token'>;
+export class UserEdit {
+	@ApiProperty({ description: 'Email' })
+	email: string;
+
+	@ApiProperty({ description: 'Username' })
+	username: string;
+
+	@ApiProperty({ description: 'Password' })
+	password: string;
+}

@@ -1,9 +1,18 @@
-import {User, Video} from "@shared";
+import { User, VideoDto } from '@shared';
+import { ApiProperty } from '@nestjs/swagger';
 
-export interface Comment {
-    id: number;
-    title: string;
-    body: string;
-    author: User;
-    commentedVideo: Video;
+export class Comment {
+	id: number;
+	@ApiProperty({
+		name: 'Title',
+		title: 'Title',
+		example: 'My Best Comment Ever',
+	})
+	title: string;
+
+	@ApiProperty({ name: 'Body', title: 'Body', example: 'My Best Comment Ever' })
+	body: string;
+
+	author: User;
+	commentedVideo: VideoDto;
 }
