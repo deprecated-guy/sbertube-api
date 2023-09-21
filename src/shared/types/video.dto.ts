@@ -1,5 +1,7 @@
-import { Video, Comment } from '@shared';
+import { ValidateNested } from 'class-validator';
+import { Video } from '@shared';
 
 export class VideoDto {
-  video: Video;
+	@ValidateNested()
+	video: Video;
 }

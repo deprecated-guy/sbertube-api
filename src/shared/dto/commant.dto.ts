@@ -1,5 +1,9 @@
-import {Comment} from "@shared";
+import { Comment } from '@shared';
+import { ValidateNested } from 'class-validator';
+import { Type } from 'class-transformer';
 
 export class CommentDto {
-    comment: Comment
+	@ValidateNested()
+	@Type(() => Comment)
+	comment: Comment;
 }

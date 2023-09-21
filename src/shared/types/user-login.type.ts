@@ -1,3 +1,12 @@
-import { UserRegister } from './user-register.interface';
+import { ApiProperty } from '@nestjs/swagger';
 
-export type UserLogin = Omit<UserRegister, 'checkPassword' & 'email'>;
+export class UserLogin {
+	@ApiProperty({ description: 'Email', example: 'test@123.com' })
+	email: string;
+
+	@ApiProperty({ description: 'Username', example: 'test' })
+	username: string;
+
+	@ApiProperty({ description: 'Password', example: 'test' })
+	password: string;
+}

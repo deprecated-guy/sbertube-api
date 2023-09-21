@@ -1,12 +1,22 @@
-import { User } from '../dto';
-import {Comment} from "./comment.interface";
+import { CommentDto, User } from '../dto';
+import { ApiProperty } from '@nestjs/swagger';
 
-export interface Video {
-  id: number;
-  title: string;
-  body: string;
-  shortBody: string;
-  path: string;
-  author: User;
-  comments: Comment[]
+export class Video {
+	id: number;
+	title: string;
+	body: string;
+	shortBody: string;
+	path: string;
+	author: User;
+	comments: CommentDto[];
+}
+
+export class VideoInput {
+	id: number;
+	@ApiProperty({ example: 'My First Video' })
+	title: string;
+	@ApiProperty({ example: 'My Best Video Ever' })
+	shortBody: string;
+	@ApiProperty({ example: 'My  BEeeeeeeeeeeeeeeeeeeeeeeeeeeeeest Video ever' })
+	body: string;
 }
