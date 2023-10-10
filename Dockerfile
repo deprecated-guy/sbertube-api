@@ -25,6 +25,10 @@ FROM build AS runner
 WORKDIR /sbertube/backend
 
 COPY --from=build /sbertube/backend ./node_modules
+
+FROM runner
+WORKDIR /sbertibe/backend
+COPY --from=runner /sbertube/backend ./dist
 COPY  . .
 RUN pnpm build
 
