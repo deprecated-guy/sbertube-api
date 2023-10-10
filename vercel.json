@@ -1,5 +1,21 @@
 {
+	"version": 2,
 	"github": {
 		"silent": true
-	}
+	},
+	"builds": [
+		{
+			"src": "src/main.ts",
+			"use": "@vercel/node"
+		}
+	],
+	"routes": [
+		{
+			"src": "/(.*)",
+			"methods": [
+				"POST", "GET", "PUT", "PATCH", "DELETE"
+			]
+		}
+	],
+	"installCommand": "pnpm i --no-frozen-lockfile"
 }
