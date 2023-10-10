@@ -1,0 +1,3 @@
+tasks:
+  - init: pnpm install && nest start --watch
+    command: nest start --watch

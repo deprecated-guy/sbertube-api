@@ -4,14 +4,57 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="43cac7f7-7160-4cab-bc93-51041f331aff" name="Changes" comment="Merge pull request #1 from SberTube/master&#10;&#10;Merge pull request #1 from deprecated-guy/master">
-      <changelist_data name="I'am Deprecated" email="80596788+deprecated-guy@users.noreply.github.com" />
+    <list default="true" id="43cac7f7-7160-4cab-bc93-51041f331aff" name="Changes" comment="fix(gitignore): gitignore edited&#10;&#10;* edit git ignore">
+      <change afterPath="$PROJECT_DIR$/.dockerignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.gitpod.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/entity/like.entity.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/shared/dto/video-arr.dto.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/shared/schemas/index.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/shared/schemas/video.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/shared/settings/app.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/shared/settings/featureMap.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/shared/settings/serviceMap.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sbertube-api.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sbertube-api.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pnpm-lock.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pnpm-lock.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app.module.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/auth/auth.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/auth/auth.module.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/auth/auth.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/auth/auth.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/comment/comment.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/comment/comment.module.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/comment/comment.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/comment/comment.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/entity/comment.entity.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/entity/comment.entity.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/entity/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/entity/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/entity/user.entity.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/entity/user.entity.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/entity/video.entity.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/entity/video.entity.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/shared/dto/user.dto.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/dto/user.dto.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/shared/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/shared/types/comment.interface.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/types/comment.interface.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/shared/types/video.dto.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/types/video.dto.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/shared/types/video.interface.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/types/video.interface.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/user/user.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/user/user.module.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/user/user.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/user/user.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/video/video.controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/video/video.controller.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/video/video.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/video/video.module.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/video/video.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/video/video.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tsconfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/tsconfig.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="HTML File" />
+        <option value="TypeScript File" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="PREVIOUS_COMMIT_AUTHORS">
@@ -29,27 +72,110 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "master",
-    "last_opened_file_path": "/home/ngdev/Desktop/sbertube/sbertube-api/.husky",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "yarn",
-    "ts.external.directory.path": "/home/ngdev/Desktop/WebStorm-231.9011.35/plugins/javascript-impl/jsLanguageServicesImpl/external",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;js.linters.configure.manually.selectedeslint&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/ngdev/Desktop/sbertube/sbertube-api/.husky&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.standard&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;/home/ngdev/Desktop/sbertube/sbertube-api/node_modules/eslint&quot;,
+    &quot;node.js.selected.package.standard&quot;: &quot;&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;yarn&quot;,
+    &quot;prettierjs.PrettierConfiguration.Package&quot;: &quot;/home/ngdev/Desktop/sbertube/sbertube-api/node_modules/prettier&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settingsDialog.application.dockerMachine&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;/home/ngdev/Desktop/sbertube/sbertube-api/node_modules/typescript/lib&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/.husky" />
       <recent name="$PROJECT_DIR$" />
     </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/static" />
+      <recent name="$PROJECT_DIR$/static/video" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Docker.Dockerfile">
+    <configuration name="Dockerfile" type="docker-deploy" factoryName="dockerfile" temporary="true" server-name="Docker">
+      <deployment type="dockerfile">
+        <settings>
+          <option name="sourceFilePath" value="Dockerfile" />
+        </settings>
+      </deployment>
+      <method v="2" />
+    </configuration>
+    <configuration name="..: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" temporary="true" server-name="Docker">
+      <deployment type="docker-compose.yml">
+        <settings>
+          <option name="sourceFilePath" value="../docker-compose.yml" />
+        </settings>
+      </deployment>
+      <method v="2" />
+    </configuration>
+    <configuration name="...backend: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" temporary="true" server-name="Docker">
+      <deployment type="docker-compose.yml">
+        <settings>
+          <option name="services">
+            <list>
+              <option value="backend" />
+            </list>
+          </option>
+          <option name="sourceFilePath" value="../docker-compose.yml" />
+        </settings>
+      </deployment>
+      <method v="2" />
+    </configuration>
+    <configuration default="true" type="docker-deploy" factoryName="docker-compose.yml" temporary="true">
+      <deployment type="docker-compose.yml">
+        <settings />
+      </deployment>
+      <method v="2" />
+    </configuration>
+    <configuration default="true" type="docker-deploy" factoryName="dockerfile" temporary="true">
+      <deployment type="dockerfile">
+        <settings />
+      </deployment>
+      <method v="2" />
+    </configuration>
+    <configuration name="docker-compose.yml: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" temporary="true" server-name="Docker">
+      <deployment type="docker-compose.yml">
+        <settings>
+          <option name="sourceFilePath" value="docker-compose.yml" />
+        </settings>
+      </deployment>
+      <method v="2" />
+    </configuration>
+    <configuration name="docker-compose.yml.backend: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" temporary="true" server-name="Docker">
+      <deployment type="docker-compose.yml">
+        <settings>
+          <option name="services">
+            <list>
+              <option value="backend" />
+            </list>
+          </option>
+          <option name="sourceFilePath" value="docker-compose.yml" />
+        </settings>
+      </deployment>
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Docker.Dockerfile" />
+        <item itemvalue="Docker.docker-compose.yml: Compose Deployment" />
+        <item itemvalue="Docker....backend: Compose Deployment" />
+        <item itemvalue="Docker.docker-compose.yml.backend: Compose Deployment" />
+        <item itemvalue="Docker...: Compose Deployment" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -61,8 +187,27 @@
       <updated>1696672254708</updated>
       <workItem from="1696672261226" duration="1047000" />
       <workItem from="1696673882713" duration="768000" />
-      <workItem from="1696674660922" duration="216000" />
+      <workItem from="1696674660922" duration="3003000" />
+      <workItem from="1696760279021" duration="21476000" />
+      <workItem from="1696785035614" duration="32326000" />
+      <workItem from="1696862369198" duration="20467000" />
+      <workItem from="1696886297453" duration="8421000" />
     </task>
+    <task id="LOCAL-00001" summary="feat(ci): add ci features&#10;* initialize git hooks&#10;* initialize lint-staged&#10;* set up all hooks needed">
+      <created>1696675153754</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1696675153754</updated>
+    </task>
+    <task id="LOCAL-00002" summary="fix(gitignore): gitignore edited&#10;&#10;* edit git ignore">
+      <created>1696676450756</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1696676450756</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -82,6 +227,21 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="feat(ci): ci successfully set up&#10;&#10;* installed husky&#10;* install lint staged" />
     <MESSAGE value="Merge pull request #1 from SberTube/master&#10;&#10;Merge pull request #1 from deprecated-guy/master" />
-    <option name="LAST_COMMIT_MESSAGE" value="Merge pull request #1 from SberTube/master&#10;&#10;Merge pull request #1 from deprecated-guy/master" />
+    <MESSAGE value="feat(ci): add ci features&#10;* initialize git hooks&#10;* initialize lint-staged&#10;* set up all hooks needed" />
+    <MESSAGE value="feat(git): gitignore edited" />
+    <MESSAGE value="feat(git): gitignore edited&#10;* edit git ignore" />
+    <MESSAGE value="fix(gitignore): gitignore edited&#10;&#10;* edit git ignore" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix(gitignore): gitignore edited&#10;&#10;* edit git ignore" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/src/shared/settings/featureMap.ts</url>
+          <line>3</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

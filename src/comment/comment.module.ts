@@ -1,15 +1,17 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { CommentEntity, UserEntity, VideoEntity } from '@entity';
 import { CommentController } from './comment.controller';
-import { JwtService } from '@nestjs/jwt';
-import { ConfigService } from '@shared';
+import { typeOrmFeaturesFactory, typeOrmProvidersFactory } from '@shared';
 import { CommentService } from './comment.service';
 
 @Module({
-	imports: [TypeOrmModule.forFeature([CommentEntity, UserEntity, VideoEntity])],
+	imports: [
+		TypeOrmModule.forFeature(
+			typeOrmFeaturesFactory(['Comment', 'User', 'Video']),
+		),
+	],
 	controllers: [CommentController],
-	providers: [JwtService, ConfigService, CommentService],
+	providers: typeOrmProvidersFactory(['JWT', 'Comment', 'Config']),
 	exports: [CommentService],
 })
 export class CommentModule {}

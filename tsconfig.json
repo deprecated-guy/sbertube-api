@@ -19,7 +19,7 @@
     "noFallthroughCasesInSwitch": false,
     "paths": {
       "@shared": ["src/shared"],
-      "@entity": ["src/entity"],
+      "@entity": ["src/entity"]
     }
   }
 }

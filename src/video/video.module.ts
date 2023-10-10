@@ -1,20 +1,21 @@
 import { Module } from '@nestjs/common';
 import { VideoController } from './video.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { CommentEntity, UserEntity, VideoEntity } from '@entity';
 import { MulterModule } from '@nestjs/platform-express';
-import { VideoService } from './video.service';
-import { JwtService } from '@nestjs/jwt';
-import { ConfigService } from '@shared';
+
+import { typeOrmFeaturesFactory, typeOrmProvidersFactory } from '@shared';
+import { join } from 'path';
 
 @Module({
 	controllers: [VideoController],
 	imports: [
-		TypeOrmModule.forFeature([UserEntity, VideoEntity, CommentEntity]),
+		TypeOrmModule.forFeature(
+			typeOrmFeaturesFactory(['Video', 'User', 'Comment']),
+		),
 		MulterModule.register({
-			dest: './static',
+			dest: join(__dirname, '..', 'static'),
 		}),
 	],
-	providers: [VideoService, JwtService, ConfigService],
+	providers: typeOrmProvidersFactory(['JWT', 'Video', 'Config']),
 })
 export class VideoModule {}

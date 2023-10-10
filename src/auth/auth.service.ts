@@ -9,7 +9,12 @@ import * as bcrypt from 'bcrypt';
 @Injectable()
 export class AuthService {
 	async createUser(userData: UserRegister) {
-		const token = this.jwtService.sign(userData, {
+		const payload = {
+			username: userData.username,
+			email: userData.email,
+			password: userData.password,
+		};
+		const token = this.jwtService.sign(payload, {
 			secret: this.config.secret,
 		});
 

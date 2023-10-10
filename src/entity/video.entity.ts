@@ -7,27 +7,43 @@ import {
 } from 'typeorm';
 import { UserEntity } from './user.entity';
 import { CommentEntity } from './comment.entity';
+import { LikeEntity } from './like.entity';
 
 @Entity('video')
 export class VideoEntity {
 	@PrimaryGeneratedColumn()
-	id: number;
+		id: number;
 
 	@Column({ default: '' })
-	title: string;
+		title: string;
 
 	@Column({ default: '' })
-	body: string;
+		body: string;
 
 	@Column({ default: '' })
-	shortBody: string;
+		shortBody: string;
+
+	@Column({ default: 0 })
+		timeToWatch: number;
+
+	@Column({ default: 0 })
+		watchedTime: number;
+
+	@Column({ default: false })
+		isViewed: boolean;
 
 	@Column({ default: '' })
-	path: string;
+		path: string;
 
 	@ManyToOne(() => UserEntity, (user) => user.videos)
-	author: UserEntity;
+		author: UserEntity;
 
 	@OneToMany(() => CommentEntity, (comment) => comment.commentedVideo)
-	comments: CommentEntity[];
+		comments: CommentEntity[];
+
+	@OneToMany(() => LikeEntity, (like) => like.likedVideo)
+		likes: LikeEntity[];
+
+	@Column()
+		likesCount: number;
 }
