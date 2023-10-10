@@ -9,7 +9,12 @@ import { User } from '@shared';
 @Injectable()
 export class CommentService {
 	public async getById(id: number): Promise<CommentDto> {
-		return this.makeDto(await this.commentRepo.findOneBy({ id }));
+		return this.makeDto(
+			await this.commentRepo.findOne({
+				where: { id },
+				relations: ['likes', 'author', 'commentedVideo'],
+			}),
+		);
 	}
 	public async createComment(comment: CommentInput, user: User) {
 		const newComment = await this.commentRepo.create(comment);
@@ -23,6 +28,8 @@ export class CommentService {
 
 		newComment.commentedVideo = video;
 		newComment.author = author;
+		newComment.likes = [];
+		newComment.likesCount = 0;
 
 		const savedComment = await this.commentRepo.save(newComment);
 
@@ -41,7 +48,7 @@ export class CommentService {
 		return this.makeDto(await this.commentRepo.save(commentData));
 	}
 	public async delete(id: number) {
-		const comment = await this.commentRepo.findOneBy({ id });
+		const comment = await this.commentRepo.findBy({ id });
 
 		if (!comment) {
 			throw new HttpException('Not found', HttpStatus.NOT_FOUND);
@@ -58,6 +65,7 @@ export class CommentService {
 				id: entity.id,
 				title: entity.title,
 				body: entity.body,
+				likesCount: entity.likes.length,
 				commentedVideo: entity.commentedVideo as unknown as VideoDto,
 				author: entity.author as unknown as User,
 			},

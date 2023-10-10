@@ -7,18 +7,26 @@ import {
 	Post,
 	Put,
 	Req,
+	Res,
 	UploadedFile,
 	UseGuards,
 	UseInterceptors,
 	UsePipes,
 	ValidationPipe,
 } from '@nestjs/common';
-import { JwtGuard, VideoDto, VideoInput } from '@shared';
+
 import { FileInterceptor } from '@nestjs/platform-express';
-import { Video } from '@shared';
-import { diskStorage } from 'multer';
+import {
+	Video,
+	editVideoSchema,
+	JwtGuard,
+	uploadVideoScheme,
+	VideoDto,
+	VideoInput,
+	UserRequest,
+} from '@shared';
 import { VideoService } from './video.service';
-import { UserRequest } from '@shared';
+
 import {
 	ApiBearerAuth,
 	ApiBody,
@@ -28,6 +36,10 @@ import {
 	ApiResponse,
 	ApiTags,
 } from '@nestjs/swagger';
+import { resolvePath } from '@nestjs/swagger/dist/utils/resolve-path.util';
+import { diskStorage } from 'multer';
+import * as path from 'path';
+import { v5 as uuid } from 'uuid';
 
 @Controller('video')
 export class VideoController {
@@ -50,27 +62,7 @@ export class VideoController {
 	@UsePipes(new ValidationPipe())
 	@ApiConsumes('multipart/form-data')
 	@ApiBody({
-		schema: {
-			type: 'object',
-			properties: {
-				file: {
-					type: 'file',
-					format: 'binary',
-				},
-				title: {
-					type: 'string',
-					example: 'My Best Video Ever',
-				},
-				shortBody: {
-					type: 'string',
-					example: 'My Best Video Ever',
-				},
-				body: {
-					type: 'string',
-					example: 'My Best Video Ever',
-				},
-			},
-		},
+		schema: uploadVideoScheme,
 	})
 	@ApiResponse({ type: VideoDto })
 	@ApiForbiddenResponse()
@@ -84,8 +76,12 @@ export class VideoController {
 					file: Express.Multer.File,
 					callback: (error: Error | null, filename: string) => void,
 				) {
-					const filename = `${file.originalname}`;
-					callback(null, filename);
+					console.log(file);
+					const filename = file.originalname + uuid();
+
+					const ext = path.parse(filename).ext;
+
+					callback(null, `${filename}${ext}`);
 				},
 			}),
 		}),
@@ -96,8 +92,8 @@ export class VideoController {
 		@UploadedFile() file: Express.Multer.File,
 		@Body() body: VideoInput,
 	) {
-		const user = req.user.user;
-		console.log(body);
+		const user = req.user;
+
 		return await this.videoService.uploadVideo(file, body, user);
 	}
 
@@ -109,31 +105,21 @@ export class VideoController {
 		description: 'Bearer Token',
 	})
 	@ApiBody({
-		schema: {
-			properties: {
-				title: {
-					type: 'string',
-					example: 'Me best video ever(renamed)',
-				},
-				body: {
-					type: 'string',
-					example: 'Me best video ever(renamed)',
-				},
-				shortBody: {
-					type: 'string',
-					example: 'Me best video ever(renamed)',
-				},
-			},
-		},
+		schema: editVideoSchema,
 	})
 	@ApiResponse({ type: VideoDto })
 	@ApiForbiddenResponse()
 	@UsePipes(new ValidationPipe())
 	@UseGuards(JwtGuard)
-	@Put()
-	async updateVideo(@Req() req: UserRequest, @Body() body: VideoInput) {
+	@Put(':title')
+	async updateVideo(
+		@Req() req: UserRequest,
+		@Body() body: VideoInput,
+		@Param('title') title: string,
+	) {
 		const user = req.user;
-		return await this.videoService.updateVideo(body, user);
+
+		return await this.videoService.updateVideo(body, title, user);
 	}
 
 	@ApiBearerAuth('Authorization')
@@ -151,8 +137,10 @@ export class VideoController {
 	}
 
 	@Get(':title')
-	async getVideoByTitle(@Param('title') title: string) {
-		return await this.videoService.getVideoByTitle(title);
+	async getVideoByTitle(@Param('title') title: string, @Res() res) {
+		const video = await this.videoService.getVideoByTitle(title);
+
+		return res.sendFile(resolvePath(video.video.path));
 	}
 	constructor(private videoService: VideoService) {}
 }

@@ -14,9 +14,19 @@ export class Video {
 export class VideoInput {
 	id: number;
 	@ApiProperty({ example: 'My First Video' })
-	title: string;
+		title: string;
 	@ApiProperty({ example: 'My Best Video Ever' })
-	shortBody: string;
+		shortBody: string;
 	@ApiProperty({ example: 'My  BEeeeeeeeeeeeeeeeeeeeeeeeeeeeeest Video ever' })
-	body: string;
+		body: string;
+	@ApiProperty()
+		timeToWatch: number;
+	@ApiProperty()
+		isViewed: boolean;
+	@ApiProperty()
+		watchedTime: number;
+	@ApiProperty()
+		viewsCount: number;
+	@ApiProperty()
+		likesCount: number;
 }

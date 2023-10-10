@@ -8,10 +8,13 @@ export class Comment {
 		title: 'Title',
 		example: 'My Best Comment Ever',
 	})
-	title: string;
+		title: string;
 
 	@ApiProperty({ name: 'Body', title: 'Body', example: 'My Best Comment Ever' })
-	body: string;
+		body: string;
+
+	@ApiProperty()
+		likesCount: number;
 
 	author: User;
 	commentedVideo: VideoDto;

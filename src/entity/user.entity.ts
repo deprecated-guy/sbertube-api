@@ -8,32 +8,48 @@ import {
 import * as bcrypt from 'bcrypt';
 import { VideoEntity } from './video.entity';
 import { CommentEntity } from './comment.entity';
+import { LikeEntity } from './like.entity';
 
 @Entity('user')
 export class UserEntity {
 	@PrimaryGeneratedColumn()
-	id: number;
+		id: number;
 
 	@Column('')
-	email: string;
+		email: string;
 
 	@Column()
-	username: string;
+		username: string;
 
 	@Column()
-	password: string;
+		password: string;
 
 	@Column()
-	checkPassword: string;
+		checkPassword: string;
+
+	@Column()
+		token: string;
+
+	@Column('')
+		registerDate: string;
+
+	@Column('')
+		timeAfterRegister: string;
+
+	@Column({ default: 0, type: 'bigint' })
+		registerTime: bigint;
+
+	@OneToMany(() => VideoEntity, (video) => video.isViewed)
+		viewedVideos: VideoEntity[];
 
 	@OneToMany(() => VideoEntity, (video) => video.author)
-	videos: VideoEntity[];
-
-	@Column()
-	token: string;
+		videos: VideoEntity[];
 
 	@OneToMany(() => CommentEntity, (comment) => comment.author)
-	comments: CommentEntity[];
+		comments: CommentEntity[];
+
+	@OneToMany(() => LikeEntity, (like) => like.author)
+		likes: LikeEntity[];
 
 	@BeforeInsert()
 	async hash() {

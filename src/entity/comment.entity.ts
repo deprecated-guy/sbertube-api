@@ -1,21 +1,33 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {
+	Column,
+	Entity,
+	ManyToOne,
+	OneToMany,
+	PrimaryGeneratedColumn,
+} from 'typeorm';
 import { UserEntity } from './user.entity';
 import { VideoEntity } from './video.entity';
+import { LikeEntity } from './like.entity';
 
 @Entity('comment')
 export class CommentEntity {
 	@PrimaryGeneratedColumn()
-	id: number;
+		id: number;
+
+	@Column()
+		title: string;
+
+	@Column()
+		body: string;
+	@Column()
+		likesCount: number;
 
 	@ManyToOne(() => UserEntity, (user) => user.comments)
-	author: UserEntity;
+		author: UserEntity;
 
 	@ManyToOne(() => VideoEntity, (video) => video.comments)
-	commentedVideo: VideoEntity;
+		commentedVideo: VideoEntity;
 
-	@Column()
-	title: string;
-
-	@Column()
-	body: string;
+	@OneToMany(() => LikeEntity, (like) => like.likedComment)
+		likes: LikeEntity[];
 }
