@@ -19,4 +19,6 @@ export class CommentInput {
 		example: 'My Best Comment Ever',
 	})
 	body: string;
+
+	editedAt: string;
 }

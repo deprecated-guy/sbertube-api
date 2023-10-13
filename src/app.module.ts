@@ -16,6 +16,7 @@ import { UserModule } from './user/user.module';
 import { VideoModule } from './video/video.module';
 import { CommentModule } from './comment/comment.module';
 import {} from './shared/settings/app';
+import { LikeModule } from './like/like.module';
 dotenv.config();
 
 @Module({
@@ -27,6 +28,7 @@ dotenv.config();
 		ServeStaticModule.forRoot(serveStaticOptions),
 		JwtModule.register(jwtSettings),
 		TypeOrmModule.forRoot(DBConnection),
+		LikeModule,
 	],
 	controllers: [AppController],
 	providers: [AppService, ConfigService],

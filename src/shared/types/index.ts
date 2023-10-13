@@ -7,3 +7,4 @@ export * from './request.interface';
 export * from './comment.interface';
 export * from './comment-input.interface';
 export * from './video.dto';
+export * from './like-request.interface';

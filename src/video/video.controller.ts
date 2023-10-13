@@ -39,7 +39,7 @@ import {
 import { resolvePath } from '@nestjs/swagger/dist/utils/resolve-path.util';
 import { diskStorage } from 'multer';
 import * as path from 'path';
-import { v5 as uuid } from 'uuid';
+import { v4 as uuid } from 'uuid';
 
 @Controller('video')
 export class VideoController {
@@ -77,9 +77,10 @@ export class VideoController {
 					callback: (error: Error | null, filename: string) => void,
 				) {
 					console.log(file);
-					const filename = file.originalname + uuid();
+					const filename =
+						path.parse(file.originalname).name.replace(/./g, '') + uuid();
 
-					const ext = path.parse(filename).ext;
+					const ext = path.parse(file.originalname).ext;
 
 					callback(null, `${filename}${ext}`);
 				},
@@ -121,7 +122,13 @@ export class VideoController {
 
 		return await this.videoService.updateVideo(body, title, user);
 	}
-
+	@Get('v/:videoTitle')
+	async getVideoDtoByTitle(@Param('videoTitle') title: string) {
+		console.log('title:', title);
+		const video = await this.videoService.getVideoByTitle(title);
+		console.log(video);
+		return await this.videoService.getVideoByTitle(title);
+	}
 	@ApiBearerAuth('Authorization')
 	@ApiHeader({
 		name: 'Authorization',
@@ -142,5 +149,6 @@ export class VideoController {
 
 		return res.sendFile(resolvePath(video.video.path));
 	}
+
 	constructor(private videoService: VideoService) {}
 }

@@ -12,22 +12,31 @@ import { LikeEntity } from './like.entity';
 @Entity('comment')
 export class CommentEntity {
 	@PrimaryGeneratedColumn()
-		id: number;
+	id: number;
 
 	@Column()
-		title: string;
+	title: string;
 
 	@Column()
-		body: string;
+	body: string;
 	@Column()
-		likesCount: number;
+	likesCount: number;
 
 	@ManyToOne(() => UserEntity, (user) => user.comments)
-		author: UserEntity;
+	author: UserEntity;
 
 	@ManyToOne(() => VideoEntity, (video) => video.comments)
-		commentedVideo: VideoEntity;
+	commentedVideo: VideoEntity;
+
+	@Column('')
+	createdAt: string;
+
+	@Column({ default: false })
+	isEdited: boolean;
+
+	@Column('')
+	editedAt: string;
 
 	@OneToMany(() => LikeEntity, (like) => like.likedComment)
-		likes: LikeEntity[];
+	likes: LikeEntity[];
 }

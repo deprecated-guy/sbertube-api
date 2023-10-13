@@ -2,7 +2,15 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UserEntity, VideoEntity } from '@entity';
 import { Repository } from 'typeorm';
-import { User, Video, VideoInput, VideoDto, CommentDto } from '@shared';
+import {
+	User,
+	Video,
+	VideoInput,
+	VideoDto,
+	CommentDto,
+	UserDto,
+	UserResponse,
+} from '@shared';
 import getVideoDurationInSeconds from 'get-video-duration';
 
 @Injectable()
@@ -16,31 +24,34 @@ export class VideoService {
 			where: {
 				title: body.title,
 			},
-			relations: ['author', 'comments', 'likes'],
+			relations: ['comments', 'likes'],
 		});
 
 		const user = await this.userRepo.findOne({
 			where: {
 				email: userData.user.email,
 			},
-			relations: ['videos', 'comments', 'likes'],
+			relations: ['comments', 'likes'],
 		});
 
 		if (!findVideo && user) {
 			const newFile = await this.videoRepo.create(body);
+
 			newFile.path = file.path;
 			newFile.comments = [];
 			newFile.isViewed = false;
+			newFile.author = user;
 			newFile.likes = [];
 			newFile.likesCount = 0;
 			newFile.timeToWatch = await getVideoDurationInSeconds(newFile.path);
 			newFile.watchedTime = 0;
-			user.videos.push(newFile);
-			await this.videoRepo.save(newFile);
+
+			const saved = await this.videoRepo.save(newFile);
 			await this.userRepo.save(user);
-			console.log(newFile.timeToWatch);
-			return this.makeDto(newFile);
+
+			return this.makeDto(saved);
 		}
+
 		throw new HttpException(
 			'This video may be uploaded recently',
 			HttpStatus.FOUND,
@@ -56,7 +67,7 @@ export class VideoService {
 			video: {
 				...video,
 				path: video.path,
-				author: video.author as unknown as User,
+				author: video.author as unknown as UserDto,
 				comments: video.comments as unknown as CommentDto[],
 			},
 		}));
@@ -130,7 +141,7 @@ export class VideoService {
 	public async getVideoByTitle(title: string): Promise<VideoDto> {
 		const video = await this.videoRepo.findOne({
 			where: { title },
-			relations: ['author', 'comments', 'likes'],
+			relations: ['author', 'comments', 'comments.author', 'likes'],
 		});
 
 		if (!video) throw new HttpException('Not Found', HttpStatus.NOT_FOUND);
@@ -139,16 +150,33 @@ export class VideoService {
 	}
 
 	private makeDto(entity: VideoEntity): VideoDto {
+		const comments: CommentDto[] = entity.comments.map((c): CommentDto => {
+			return {
+				comment: {
+					isEdited: c.isEdited,
+					createdAt: c.createdAt,
+					editedAt: c.editedAt,
+					title: c.title,
+					body: c.body,
+					likesCount: c.likesCount,
+					commentedVideo: c.commentedVideo as unknown as VideoDto,
+					id: c.id,
+					author: {
+						user: c.author as unknown as UserResponse,
+					},
+				},
+			};
+		});
+
 		return {
 			video: {
 				...entity,
 				path: entity.path,
-				author: entity.author as unknown as User,
-				comments: entity.comments as unknown as CommentDto[],
+				author: entity.author as unknown as UserDto,
+				comments: comments,
 			},
 		};
 	}
-
 	constructor(
 		@InjectRepository(VideoEntity) private videoRepo: Repository<VideoEntity>,
 		@InjectRepository(UserEntity) private userRepo: Repository<UserEntity>,
