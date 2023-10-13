@@ -9,4 +9,7 @@ export class ConfigService {
 	public dbHost = process.env.DB_HOST;
 	public dbUsername = process.env.DB_USERNAME;
 	public dbPort = process.env.DB_PORT;
+	public dropSchema = process.env.DROPSCHEMA;
+	public synchronize = process.env.SYNCHROMIZE;
+	public migrationsRun = process.env.MIGRATIONS_RUN;
 }

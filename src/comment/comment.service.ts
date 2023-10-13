@@ -2,7 +2,7 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CommentEntity, UserEntity, VideoEntity } from '@entity';
 import { Repository } from 'typeorm';
-import { CommentInput, CommentDto, VideoDto, UserDto } from '@shared';
+import { CommentInput, CommentDto, VideoDto, UserDto, LikeDto, DislikeDto } from '@shared';
 
 import { User } from '@shared';
 
@@ -64,13 +64,18 @@ export class CommentService {
 	public makeDto(entity: CommentEntity): CommentDto {
 		return {
 			comment: {
+				dislikesCount: entity.dislikesCount,
+				isDisliked: entity.isDisliked,
+				dislikes: entity.dislikes as unknown as DislikeDto[],
+				isLiked: entity.isLiked,
 				isEdited: entity.isEdited,
 				createdAt: entity.createdAt,
 				editedAt: entity.editedAt,
 				id: entity.id,
+				likes: entity.likes as unknown as LikeDto[],
 				title: entity.title,
 				body: entity.body,
-				likesCount: entity.likes.length,
+				likesCount: entity.likesCount,
 				commentedVideo: entity.commentedVideo as unknown as VideoDto,
 				author: entity.author as unknown as UserDto,
 			},

@@ -16,15 +16,7 @@ import {
 } from '@nestjs/common';
 
 import { FileInterceptor } from '@nestjs/platform-express';
-import {
-	Video,
-	editVideoSchema,
-	JwtGuard,
-	uploadVideoScheme,
-	VideoDto,
-	VideoInput,
-	UserRequest,
-} from '@shared';
+import { Video, editVideoSchema, JwtGuard, uploadVideoScheme, VideoDto, VideoInput, UserRequest } from '@shared';
 import { VideoService } from './video.service';
 
 import {
@@ -71,14 +63,9 @@ export class VideoController {
 		FileInterceptor('file', {
 			storage: diskStorage({
 				destination: './static/video',
-				filename(
-					req,
-					file: Express.Multer.File,
-					callback: (error: Error | null, filename: string) => void,
-				) {
+				filename(req, file: Express.Multer.File, callback: (error: Error | null, filename: string) => void) {
 					console.log(file);
-					const filename =
-						path.parse(file.originalname).name.replace(/./g, '') + uuid();
+					const filename = path.parse(file.originalname).name.replace(/./g, '') + uuid();
 
 					const ext = path.parse(file.originalname).ext;
 
@@ -88,11 +75,7 @@ export class VideoController {
 		}),
 	)
 	@Post()
-	async uploadVideo(
-		@Req() req: UserRequest,
-		@UploadedFile() file: Express.Multer.File,
-		@Body() body: VideoInput,
-	) {
+	async uploadVideo(@Req() req: UserRequest, @UploadedFile() file: Express.Multer.File, @Body() body: VideoInput) {
 		const user = req.user;
 
 		return await this.videoService.uploadVideo(file, body, user);
@@ -113,20 +96,13 @@ export class VideoController {
 	@UsePipes(new ValidationPipe())
 	@UseGuards(JwtGuard)
 	@Put(':title')
-	async updateVideo(
-		@Req() req: UserRequest,
-		@Body() body: VideoInput,
-		@Param('title') title: string,
-	) {
+	async updateVideo(@Req() req: UserRequest, @Body() body: VideoInput, @Param('title') title: string) {
 		const user = req.user;
 
 		return await this.videoService.updateVideo(body, title, user);
 	}
 	@Get('v/:videoTitle')
 	async getVideoDtoByTitle(@Param('videoTitle') title: string) {
-		console.log('title:', title);
-		const video = await this.videoService.getVideoByTitle(title);
-		console.log(video);
 		return await this.videoService.getVideoByTitle(title);
 	}
 	@ApiBearerAuth('Authorization')

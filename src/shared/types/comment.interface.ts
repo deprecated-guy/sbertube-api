@@ -1,4 +1,4 @@
-import { UserDto, VideoDto } from '@shared';
+import { DislikeDto, LikeDto, UserDto, VideoDto } from '@shared';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class Comment {
@@ -15,13 +15,29 @@ export class Comment {
 
 	@ApiProperty()
 	likesCount: number;
+
+	@ApiProperty()
+	dislikesCount: number;
+
 	@ApiProperty()
 	createdAt: string;
 
 	@ApiProperty()
 	editedAt: string;
+
+	@ApiProperty()
+	isLiked: boolean;
+
+	@ApiProperty()
+	isDisliked: boolean;
+
+	@ApiProperty()
+	isEdited: boolean;
+
 	author: UserDto;
 
-	isEdited: boolean;
+	likes: LikeDto[];
+	dislikes: DislikeDto[];
+
 	commentedVideo: VideoDto;
 }

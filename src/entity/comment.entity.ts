@@ -1,13 +1,7 @@
-import {
-	Column,
-	Entity,
-	ManyToOne,
-	OneToMany,
-	PrimaryGeneratedColumn,
-} from 'typeorm';
+import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { UserEntity } from './user.entity';
 import { VideoEntity } from './video.entity';
-import { LikeEntity } from './like.entity';
+import { DislikeEntity, LikeEntity } from './like.entity';
 
 @Entity('comment')
 export class CommentEntity {
@@ -28,15 +22,27 @@ export class CommentEntity {
 	@ManyToOne(() => VideoEntity, (video) => video.comments)
 	commentedVideo: VideoEntity;
 
-	@Column('')
+	@Column({ default: '' })
 	createdAt: string;
 
 	@Column({ default: false })
 	isEdited: boolean;
 
-	@Column('')
+	@Column({ default: false })
+	isLiked: boolean;
+
+	@Column({ default: '' })
 	editedAt: string;
+
+	@Column({ default: false })
+	isDisliked: boolean;
 
 	@OneToMany(() => LikeEntity, (like) => like.likedComment)
 	likes: LikeEntity[];
+
+	@OneToMany(() => DislikeEntity, (like) => like.dislikedComment)
+	dislikes: DislikeEntity[];
+
+	@Column()
+	dislikesCount: number;
 }

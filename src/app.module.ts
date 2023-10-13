@@ -5,18 +5,14 @@ import { AuthModule } from './auth/auth.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { JwtModule } from '@nestjs/jwt';
-import {
-	ConfigService,
-	jwtSettings,
-	DBConnection,
-	serveStaticOptions,
-} from '@shared';
+import { ConfigService, jwtSettings, DBConnection, serveStaticOptions } from '@shared';
 import * as dotenv from 'dotenv';
 import { UserModule } from './user/user.module';
 import { VideoModule } from './video/video.module';
 import { CommentModule } from './comment/comment.module';
 import {} from './shared/settings/app';
 import { LikeModule } from './like/like.module';
+import { DislikeModule } from './dislike/dislike.module';
 dotenv.config();
 
 @Module({
@@ -29,6 +25,7 @@ dotenv.config();
 		JwtModule.register(jwtSettings),
 		TypeOrmModule.forRoot(DBConnection),
 		LikeModule,
+		DislikeModule,
 	],
 	controllers: [AppController],
 	providers: [AppService, ConfigService],

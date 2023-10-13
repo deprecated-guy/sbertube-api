@@ -1,26 +1,8 @@
-import {
-	Body,
-	Controller,
-	Delete,
-	Get,
-	Param,
-	Put,
-	Req,
-	UseGuards,
-	UsePipes,
-	ValidationPipe,
-} from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Put, Req, UseGuards, UsePipes, ValidationPipe } from '@nestjs/common';
 import { UserEdit, JwtGuard, User } from '@shared';
 import { UserService } from './user.service';
 import { UserRequest } from '@shared';
-import {
-	ApiBearerAuth,
-	ApiBody,
-	ApiForbiddenResponse,
-	ApiHeader,
-	ApiResponse,
-	ApiTags,
-} from '@nestjs/swagger';
+import { ApiBearerAuth, ApiBody, ApiForbiddenResponse, ApiHeader, ApiResponse, ApiTags } from '@nestjs/swagger';
 
 @Controller('user')
 export class UserController {
@@ -58,6 +40,7 @@ export class UserController {
 	async deleteUser(@Req() req: UserRequest) {
 		return await this.userService.deleteUser(req.user);
 	}
+
 	@ApiTags('Get Current User')
 	@ApiBearerAuth('Authorization')
 	@ApiHeader({
@@ -74,6 +57,7 @@ export class UserController {
 	async getCurrentUser(@Req() req: UserRequest) {
 		return await this.userService.getCurrentUser(req.user);
 	}
+
 	@ApiTags('Get User By Username')
 	@ApiForbiddenResponse()
 	@UsePipes(new ValidationPipe())
@@ -81,5 +65,6 @@ export class UserController {
 	async getUser(@Param('username') username: string) {
 		return await this.userService.getOneUserByUsername(username);
 	}
+
 	constructor(private userService: UserService) {}
 }

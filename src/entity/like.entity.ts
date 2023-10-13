@@ -17,3 +17,17 @@ export class LikeEntity {
 	@ManyToOne(() => CommentEntity, (comment) => comment.likes)
 	likedComment: CommentEntity;
 }
+@Entity('dislike')
+export class DislikeEntity {
+	@PrimaryGeneratedColumn()
+	id: number;
+
+	@ManyToOne(() => UserEntity, (user) => user.dislikes)
+	author: UserEntity;
+
+	@ManyToOne(() => VideoEntity, (video) => video.dislikes)
+	dislikedVideo: VideoEntity;
+
+	@ManyToOne(() => CommentEntity, (comment) => comment.dislikes)
+	dislikedComment: CommentEntity;
+}

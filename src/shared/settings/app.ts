@@ -1,4 +1,4 @@
-import { TypeOrmModuleOptions } from '@nestjs/typeorm';
+import { TypeOrmModuleAsyncOptions, TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { JwtModuleOptions } from '@nestjs/jwt';
 import { ServeStaticModuleOptions } from '@nestjs/serve-static';
 import { join } from 'path';
@@ -6,6 +6,22 @@ import { EntityClassOrSchema } from '@nestjs/typeorm/dist/interfaces/entity-clas
 import { featureMap } from './featureMap';
 import { Provider } from '@nestjs/common';
 import { ServiceMap } from './serviceMap';
+import { ConfigService } from '../services';
+
+export const DbConnectionAsync: TypeOrmModuleAsyncOptions = {
+	inject: [ConfigService],
+	useFactory: (cfg: ConfigService): TypeOrmModuleOptions => ({
+		database: cfg.dbNAme,
+		type: 'mysql',
+		username: cfg.dbUsername,
+		port: +cfg.dbPort,
+		password: cfg.dbPassword,
+		entities: ['dist/**/*.entity.js'],
+		host: cfg.dbHost,
+		synchronize: !!cfg.synchronize,
+		dropSchema: !!cfg.dropSchema,
+	}),
+};
 
 export const DBConnection: TypeOrmModuleOptions = {
 	database: 'sbtb',
@@ -31,9 +47,7 @@ export const serveStaticOptions: ServeStaticModuleOptions = {
 	renderPath: '',
 };
 
-export const typeOrmFeaturesFactory = (
-	entityNames: string[],
-): EntityClassOrSchema[] =>
+export const typeOrmFeaturesFactory = (entityNames: string[]): EntityClassOrSchema[] =>
 	entityNames.map((entityName) => {
 		return featureMap.get(entityName);
 	});

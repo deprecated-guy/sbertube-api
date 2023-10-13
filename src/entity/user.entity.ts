@@ -1,14 +1,8 @@
-import {
-	BeforeInsert,
-	Column,
-	Entity,
-	OneToMany,
-	PrimaryGeneratedColumn,
-} from 'typeorm';
+import { BeforeInsert, Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 import { VideoEntity } from './video.entity';
 import { CommentEntity } from './comment.entity';
-import { LikeEntity } from './like.entity';
+import { DislikeEntity, LikeEntity } from './like.entity';
 
 @Entity('user')
 export class UserEntity {
@@ -50,6 +44,8 @@ export class UserEntity {
 
 	@OneToMany(() => LikeEntity, (like) => like.author)
 	likes: LikeEntity[];
+	@OneToMany(() => DislikeEntity, (like) => like.author)
+	dislikes: DislikeEntity[];
 
 	@BeforeInsert()
 	async hash() {

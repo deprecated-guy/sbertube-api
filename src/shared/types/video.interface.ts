@@ -1,4 +1,4 @@
-import { CommentDto, UserDto } from '../dto';
+import { CommentDto, LikeDto, UserDto } from '../dto';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class Video {
@@ -9,10 +9,13 @@ export class Video {
 	path: string;
 	author: UserDto;
 	comments: CommentDto[];
+	likes: LikeDto[];
+	isLiked: boolean;
 }
 
 export class VideoInput {
 	id: number;
+
 	@ApiProperty({ example: 'My First Video' })
 	title: string;
 	@ApiProperty({ example: 'My Best Video Ever' })
