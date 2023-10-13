@@ -12,9 +12,7 @@
 	"routes": [
 		{
 			"src": "/(.*)",
-			"methods": [
-				"POST", "GET", "PUT", "PATCH", "DELETE"
-			]
+			"methods": ["POST", "GET", "PUT", "PATCH", "DELETE"]
 		}
 	],
 	"installCommand": "pnpm i --no-frozen-lockfile"

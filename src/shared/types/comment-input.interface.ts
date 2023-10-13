@@ -7,6 +7,7 @@ export class CommentInput {
 		example: '1',
 	})
 	videoId: number;
+
 	@ApiProperty({
 		name: 'title',
 		title: 'title',
