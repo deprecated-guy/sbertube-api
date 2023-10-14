@@ -100,10 +100,7 @@ export class UserService {
 				token: dto.token,
 				registerDate: dto.registerDate,
 				registerTime: dto.registerTime,
-				timeAfterRegister: format(
-					Date.now() - Number(dto.registerTime),
-					'Y.M.dd HH:mm:ss',
-				),
+				timeAfterRegister: format(Date.now() - Number(dto.registerTime), 'Y.M.dd HH:mm:ss'),
 			},
 		};
 	}

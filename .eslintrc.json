@@ -1,74 +1,44 @@
 {
-  "root": true,
-  "ignorePatterns": [
-    "projects/**/*"
-  ],
-  "plugins": ["prettier","unused-imports", "@typescript-eslint"],
-  "overrides": [
-
-    {
-      "files": [
-        "*.ts"
-      ],
-      "parser": "@typescript-eslint/parser",
-      "extends": [
-        "prettier",
-        "eslint:recommended",
-        "plugin:@typescript-eslint/recommended"
-
-      ],
-      "rules": {
-        "no-unused-vars": "off", // or "@typescript-eslint/no-unused-vars": "off",
-        "unused-imports/no-unused-imports": "error",
-        "unused-imports/no-unused-vars": [
-          "warn",
-          { "vars": "all", "varsIgnorePattern": "^_", "args": "after-used", "argsIgnorePattern": "^_" }
-        ],
-        "indent": [
-        "error",
-        "tab"
-      ],
-        "linebreak-style": [
-          "error",
-          "unix"
-        ],
-        "max-len": [
-          "error",
-          {
-            "code": 120
-          }
-        ],
-        "quotes": [
-          "error",
-          "single"
-        ],
-        "semi": [
-          "error",
-          "always"
-        ]
-      }
-    },
-    {
-      "files": [
-        "*.html"
-      ],
-      "extends": [
-        "prettier"
-      ],
-			"plugins": ["html","prettier"],
+	"root": true,
+	"ignorePatterns": ["projects/**/*"],
+	"plugins": ["prettier", "unused-imports", "@typescript-eslint"],
+	"overrides": [
+		{
+			"files": ["*.ts"],
+			"parser": "@typescript-eslint/parser",
+			"extends": ["prettier", "eslint:recommended", "plugin:@typescript-eslint/recommended"],
 			"rules": {
-        "max-len": [
-          "error",
-          {
-            "code": 120
-          }
-        ],
-        "quotes": [
-          "error",
-          "single"
-        ]
-
+				"no-unused-vars": "off", // or "@typescript-eslint/no-unused-vars": "off",
+				"unused-imports/no-unused-imports": "error",
+				"unused-imports/no-unused-vars": [
+					"warn",
+					{ "vars": "all", "varsIgnorePattern": "^_", "args": "after-used", "argsIgnorePattern": "^_" }
+				],
+				"indent": ["error", "tab"],
+				"linebreak-style": ["error", "unix"],
+				"max-len": [
+					"error",
+					{
+						"code": 120
+					}
+				],
+				"quotes": ["error", "single"],
+				"semi": ["error", "always"]
 			}
-    }
-  ]
+		},
+		{
+			"files": ["*.html"],
+			"extends": ["prettier"],
+			"plugins": ["html", "prettier"],
+			"rules": {
+				"max-len": [
+					"error",
+					{
+						"code": 120
+					}
+				],
+				"quotes": ["error", "single"]
+			}
+		}
+	]
 }

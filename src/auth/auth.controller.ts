@@ -1,18 +1,7 @@
-import {
-	Body,
-	Controller,
-	Post,
-	UsePipes,
-	ValidationPipe,
-} from '@nestjs/common';
+import { Body, Controller, Post, UsePipes, ValidationPipe } from '@nestjs/common';
 import { User, UserLogin, UserRegister } from '@shared';
 import { AuthService } from './auth.service';
-import {
-	ApiBody,
-	ApiForbiddenResponse,
-	ApiResponse,
-	ApiTags,
-} from '@nestjs/swagger';
+import { ApiBody, ApiForbiddenResponse, ApiResponse, ApiTags } from '@nestjs/swagger';
 
 @Controller('auth')
 export class AuthController {

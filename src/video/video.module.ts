@@ -9,9 +9,7 @@ import { join } from 'path';
 @Module({
 	controllers: [VideoController],
 	imports: [
-		TypeOrmModule.forFeature(
-			typeOrmFeaturesFactory(['Video', 'User', 'Comment']),
-		),
+		TypeOrmModule.forFeature(typeOrmFeaturesFactory(['Video', 'User', 'Comment'])),
 		MulterModule.register({
 			dest: join(__dirname, '..', 'static'),
 		}),

@@ -27,10 +27,7 @@ export class AuthService {
 		});
 
 		if (findedUser) {
-			throw new HttpException(
-				'This user already registered',
-				HttpStatus.CONFLICT,
-			);
+			throw new HttpException('This user already registered', HttpStatus.CONFLICT);
 		}
 
 		user.password = await bcrypt.hash(user.password, 10);
@@ -51,10 +48,7 @@ export class AuthService {
 		const checkPassword = bcrypt.compare(userLogin.password, user.password);
 
 		if (!user || !checkPassword) {
-			throw new HttpException(
-				'Invalid username or password',
-				HttpStatus.UNPROCESSABLE_ENTITY,
-			);
+			throw new HttpException('Invalid username or password', HttpStatus.UNPROCESSABLE_ENTITY);
 		}
 
 		return this.makeDto(user);

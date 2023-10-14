@@ -25,10 +25,11 @@
    2. [Get Video By Title](#get-comment-by-id)
    3. [Edit Comment](#edit-comment) (Authentication needed)
    4. [Delete Comment](#delete-comment) (Authentication needed)
-5. Likes / Dislikes - Like/Dislike manipulation methods [Queried] 
-	 1. [Create Like](#create-like-) (Authentication needed) 
+5. Likes / Dislikes - Like/Dislike manipulation methods [Queried]
+   1. [Create Like](#create-like-) (Authentication needed)
    2. [Remove Like](#remove-like) [Queried] (Authentication needed)
    3. [Create Dislike](#create-dislike) (Authentication needed)
+
 # Auth
 
 > **Note**
@@ -691,34 +692,36 @@ fetch('api/commants/1', {
 }
 ```
 
-
 > **Note**
-> These methods uses query params 
+> These methods uses query params
 
 # Likes / Dislikes
 
 ## Likes
+
 > Base route
 > api/like/
 
-## Create Like 
+## Create Like
 
 > **Required**
 > Authentication needed
 
 > Type: Post
+
 ## Expected values
 
 | #   | naming    | type   | specs            |
-| --- |-----------|--------|------------------|
+| --- | --------- | ------ | ---------------- |
 | 1   | videoId   | number | liked video id   |
 | 2   | commentId | number | liked comment id |
 
 # Example
+
 ```javascript
 fetch('api/like/', {
 	body: {
-		commentId: 1
+		commentId: 1,
 	},
 	method: 'POST',
 	headers: {
@@ -753,6 +756,7 @@ fetch('api/like/', {
 > Authentication needed
 
 > Type: DELETE
+
 ## Expected values
 
 > **Note**
@@ -761,6 +765,7 @@ fetch('api/like/', {
 > /api/like/../..?dislikeId=
 
 # Example
+
 ```javascript
 fetch('api/like/vieo/1?likeId=1', {
 	method: 'DELETE',
@@ -776,11 +781,10 @@ fetch('api/like/vieo/1?likeId=1', {
  nothing
 ```
 
-
 # Dislikes
+
 > Base route
 > api/dislike/
-
 
 ## Create Dislike
 
@@ -788,18 +792,20 @@ fetch('api/like/vieo/1?likeId=1', {
 > Authentication needed
 
 > Type: Post
+
 ## Expected values
 
 | #   | naming    | type   | specs            |
-| --- |-----------|--------|------------------|
+| --- | --------- | ------ | ---------------- |
 | 1   | videoId   | number | liked video id   |
 | 2   | commentId | number | liked comment id |
 
 # Example
+
 ```javascript
 fetch('api/dislike/', {
 	body: {
-		commentId: 1
+		commentId: 1,
 	},
 	method: 'POST',
 	headers: {
@@ -834,6 +840,7 @@ fetch('api/dislike/', {
 > Authentication needed
 
 > Type: DELETE
+
 ## Expected values
 
 > **Note**
@@ -841,8 +848,8 @@ fetch('api/dislike/', {
 
 > /api/dislike/../..?dislikeId=
 
-
 # Example
+
 ```javascript
 fetch('api/dislike/vieo/1?likeId=1', {
 	method: 'DELETE',

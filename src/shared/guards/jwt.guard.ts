@@ -3,7 +3,7 @@ import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { Observable } from 'rxjs';
 import { JwtService } from '@nestjs/jwt';
-import { ConfigService } from '@shared';
+import { ConfigService, User } from '@shared';
 import { UserRequest } from '../types';
 
 @Injectable()
@@ -14,14 +14,12 @@ export class JwtGuard extends AuthGuard('jwt') implements CanActivate {
 	) {
 		super();
 	}
-	handleRequest(err: any, user: any, info: any, context: any) {
+	handleRequest(err: unknown, user: User, info: unknown, context: ExecutionContext) {
 		const req: UserRequest = context.switchToHttp().getRequest();
-		req.user = { user };
-		return user;
+		const userFromReq = req.user;
+		return userFromReq;
 	}
-	canActivate(
-		context: ExecutionContext,
-	): boolean | Promise<boolean> | Observable<boolean> {
+	canActivate(context: ExecutionContext): boolean | Promise<boolean> | Observable<boolean> {
 		const req = context.switchToHttp().getRequest();
 		const token = req.headers.authorization?.split(' ')[1];
 
