@@ -5,8 +5,7 @@ import { NestExpressApplication } from '@nestjs/platform-express';
 import { NestFactory } from '@nestjs/core/nest-factory';
 
 async function bootstrap() {
-	const app: NestExpressApplication =
-		await NestFactory.create<NestExpressApplication>(AppModule);
+	const app: NestExpressApplication = await NestFactory.create<NestExpressApplication>(AppModule);
 
 	await app.enableCors({
 		allowedHeaders: '*',

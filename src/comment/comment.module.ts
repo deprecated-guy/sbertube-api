@@ -5,11 +5,7 @@ import { typeOrmFeaturesFactory, typeOrmProvidersFactory } from '@shared';
 import { CommentService } from './comment.service';
 
 @Module({
-	imports: [
-		TypeOrmModule.forFeature(
-			typeOrmFeaturesFactory(['Comment', 'User', 'Video']),
-		),
-	],
+	imports: [TypeOrmModule.forFeature(typeOrmFeaturesFactory(['Comment', 'User', 'Video']))],
 	controllers: [CommentController],
 	providers: typeOrmProvidersFactory(['JWT', 'Comment', 'Config']),
 	exports: [CommentService],

@@ -1,55 +1,51 @@
-import {
-	BeforeInsert,
-	Column,
-	Entity,
-	OneToMany,
-	PrimaryGeneratedColumn,
-} from 'typeorm';
+import { BeforeInsert, Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 import { VideoEntity } from './video.entity';
 import { CommentEntity } from './comment.entity';
-import { LikeEntity } from './like.entity';
+import { DislikeEntity, LikeEntity } from './like.entity';
 
 @Entity('user')
 export class UserEntity {
 	@PrimaryGeneratedColumn()
-		id: number;
+	id: number;
 
 	@Column('')
-		email: string;
+	email: string;
 
 	@Column()
-		username: string;
+	username: string;
 
 	@Column()
-		password: string;
+	password: string;
 
 	@Column()
-		checkPassword: string;
+	checkPassword: string;
 
 	@Column()
-		token: string;
+	token: string;
 
 	@Column('')
-		registerDate: string;
+	registerDate: string;
 
 	@Column('')
-		timeAfterRegister: string;
+	timeAfterRegister: string;
 
 	@Column({ default: 0, type: 'bigint' })
-		registerTime: bigint;
+	registerTime: bigint;
 
 	@OneToMany(() => VideoEntity, (video) => video.isViewed)
-		viewedVideos: VideoEntity[];
+	viewedVideos: VideoEntity[];
 
 	@OneToMany(() => VideoEntity, (video) => video.author)
-		videos: VideoEntity[];
+	videos: VideoEntity[];
 
 	@OneToMany(() => CommentEntity, (comment) => comment.author)
-		comments: CommentEntity[];
+	comments: CommentEntity[];
 
 	@OneToMany(() => LikeEntity, (like) => like.author)
-		likes: LikeEntity[];
+	likes: LikeEntity[];
+	@OneToMany(() => DislikeEntity, (like) => like.author)
+	dislikes: DislikeEntity[];
 
 	@BeforeInsert()
 	async hash() {

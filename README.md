@@ -1,11 +1,12 @@
 # SberTube (API)
+
 ![](logo-readme.svg)
 
 ## The Smallest and powerful API for new generation video service for creators.
 
-
 # Methods
-1. Auth - Authorization 
+
+1. Auth - Authorization
    1. [Register](#register)
    2. [Login](#login)
 2. User - User manipulation methods
@@ -24,7 +25,10 @@
    2. [Get Video By Title](#get-comment-by-id)
    3. [Edit Comment](#edit-comment) (Authentication needed)
    4. [Delete Comment](#delete-comment) (Authentication needed)
-
+5. Likes / Dislikes - Like/Dislike manipulation methods [Queried]
+   1. [Create Like](#create-like-) (Authentication needed)
+   2. [Remove Like](#remove-like) [Queried] (Authentication needed)
+   3. [Create Dislike](#create-dislike) (Authentication needed)
 
 # Auth
 
@@ -33,41 +37,44 @@
 
 # Register
 
-
 > Type: POST
+
 ## This method accept user to register
+
 ```http request
    POST api/auth/login
 ```
+
 > Incoming parameters:
 
-| # | naming        | type   | specs                   |
-|---|---------------|--------|-------------------------|
-| 1 | email         | string | your email              |
-| 2 | username      | string | your username           |
-| 3 | password      | string | your password           |
-| 4 | checkPassword | string | repeat of your password |
+| #   | naming        | type   | specs                   |
+| --- | ------------- | ------ | ----------------------- |
+| 1   | email         | string | your email              |
+| 2   | username      | string | your username           |
+| 3   | password      | string | your password           |
+| 4   | checkPassword | string | repeat of your password |
 
 ## Example
+
 ```javascript
-    const req = await fetch('api/auth/login', { 
-      body: 
-        {
-          email: "123@mail.ru", 
-          username:"test",
-          password: "123",
-          checkPassword: "123" 
-        },
-      method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    )
-    const resp = req.json()
+const req = await fetch('api/auth/login', {
+	body: {
+		email: '123@mail.ru',
+		username: 'test',
+		password: '123',
+		checkPassword: '123',
+	},
+	method: 'POST',
+	headers: {
+		'Content-Type': 'application/json',
+	},
+});
+const resp = req.json();
 ```
->Returned object
-``` JSON
+
+> Returned object
+
+```JSON
 {
     "user": {
         "email": "1234@mail.ru",
@@ -77,40 +84,44 @@
         "videos": []
     }
 }
-````
+```
 
 # Login
 
 > Type: POST
+
 ## This method accept user to login
+
 ```http request
     api/auth/login
 ```
+
 > Incoming parameters:
 
-| # | naming        | type   | specs                   |
-|---|---------------|--------|-------------------------|
-| 1 | username      | string | your username           |
-| 2 | password      | string | your password           |
+| #   | naming   | type   | specs         |
+| --- | -------- | ------ | ------------- |
+| 1   | username | string | your username |
+| 2   | password | string | your password |
 
 > Returned object
+
 ## Example
+
 ```javascript
-    const req = await fetch('api/auth/login', { 
-      body: 
-        {
-          username:"test",
-          password: "123",
-        },
-      method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    )
-    const resp = req.json()
+const req = await fetch('api/auth/login', {
+	body: {
+		username: 'test',
+		password: '123',
+	},
+	method: 'POST',
+	headers: {
+		'Content-Type': 'application/json',
+	},
+});
+const resp = req.json();
 ```
-``` JSON
+
+```JSON
  {
     "user": {
         "email": "1234@mail.ru",
@@ -120,55 +131,54 @@
         "videos": []
     }
 }
-````
+```
 
-# User 
+# User
 
 > **Note**
 > This section dedicated to work with users
 
 # Edit User
+
 > **Required**
 > Needs Authorization
 
 > Type: Put
+
 ```http request
  PUT api/auth/login
 ```
 
-
-| # | naming   | type   | specs         |
-|---|----------|--------|---------------|
-| 1 | email    | string | your email    |
-| 1 | username | string | your username |
-| 2 | password | string | your password |
+| #   | naming   | type   | specs         |
+| --- | -------- | ------ | ------------- |
+| 1   | email    | string | your email    |
+| 1   | username | string | your username |
+| 2   | password | string | your password |
 
 > **Note**
 > Email not editable field
 > These method will edit your data on datatbase
 
-
-
-
 > Returned object
+
 ## Example
+
 ```javascript
-    const req = await fetch('api/user', { 
-      body: 
-        {
-          email: "123@mail.ru",
-          username:"test123",
-          password: "123",
-        },
-      method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    )
-    const resp = req.json()
+const req = await fetch('api/user', {
+	body: {
+		email: '123@mail.ru',
+		username: 'test123',
+		password: '123',
+	},
+	method: 'PUT',
+	headers: {
+		'Content-Type': 'application/json',
+	},
+});
+const resp = req.json();
 ```
-``` JSON
+
+```JSON
  {
     "user": {
         "email": "1234@mail.ru",
@@ -181,6 +191,7 @@
 ```
 
 # Get Current User
+
 > **Required**
 > Needs Authorization
 
@@ -197,19 +208,21 @@
 > This method return all your data from database
 
 > Not Return Value
+
 ## Example
+
 ```javascript
-    const req = await fetch('api/user/account', { 
-      
-      method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-           Authentcation: 'Bearer 123'
-        },
-      }
-    )
+const req = await fetch('api/user/account', {
+	method: 'GET',
+	headers: {
+		'Content-Type': 'application/json',
+		Authentcation: 'Bearer 123',
+	},
+});
 ```
+
 ## Returns object
+
 ```JSON
 {
     "user": {
@@ -224,7 +237,6 @@
 
 # Get User By Username
 
-
 > Type: Get
 
 ```http request
@@ -235,18 +247,20 @@
 > This method return all requested user data
 
 > Not Return Value
+
 ## Example
+
 ```javascript
-    const req = await fetch('api/user/test', { 
-      
-      method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    )
+const req = await fetch('api/user/test', {
+	method: 'GET',
+	headers: {
+		'Content-Type': 'application/json',
+	},
+});
 ```
+
 ## Returns object
+
 ```JSON
 {
     "user": {
@@ -259,8 +273,8 @@
 }
 ```
 
-
 # Delete User
+
 > **Required**
 > Needs Authorization
 
@@ -276,21 +290,19 @@
 > **Note**
 > This method will delete your user from database
 
-
 ## Example
+
 ```javascript
-    const req = await fetch('api/user', {
-      method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-           Authentication: 'Bearer 123'
-        },
-      }
-    )
+const req = await fetch('api/user', {
+	method: 'DELETE',
+	headers: {
+		'Content-Type': 'application/json',
+		Authentication: 'Bearer 123',
+	},
+});
 ```
 
 > Not Return Value
-
 
 # Video
 
@@ -304,29 +316,28 @@
 
 > Type: POST
 
-
 ```http request
-   POST api/video 
+   POST api/video
 ```
 
 ### Expected values
-| # | naming    | type   | specs                          |
-|---|-----------|--------|--------------------------------|
-| 1 | file      | file   | file which you want to upload  |
-| 2 | title     | string | your uploaded video title      |
-| 3 | body      | string | your video description         |
-| 4 | shortBody | string | your video short description   |
+
+| #   | naming    | type   | specs                         |
+| --- | --------- | ------ | ----------------------------- |
+| 1   | file      | file   | file which you want to upload |
+| 2   | title     | string | your uploaded video title     |
+| 3   | body      | string | your video description        |
+| 4   | shortBody | string | your video short description  |
 
 > **Note**
 > These method use form-data for file upload
 
 ```javascript
-const params = new FormData(form); 
-
+const params = new FormData(form);
 
 fetch('api/video', {
-   method: 'POST',
-   body: params
+	method: 'POST',
+	body: params,
 });
 ```
 
@@ -368,22 +379,19 @@ fetch('api/video', {
 
 > Type: GET
 
-
 ```http request
-   GET api/video 
+   GET api/video
 ```
 
 ### Expected values
-| # | naming | type   | specs       |
-|---|--------|--------|-------------|
-| 1 | title  | string | video title |
 
-
-
+| #   | naming | type   | specs       |
+| --- | ------ | ------ | ----------- |
+| 1   | title  | string | video title |
 
 ```javascript
 fetch('api/video/test', {
-   method: 'GET',
+	method: 'GET',
 });
 ```
 
@@ -415,16 +423,13 @@ fetch('api/video/test', {
 
 > Type: GET
 
-
 ```http request
-   GET api/video/:title 
+   GET api/video/:title
 ```
-
-
 
 ```javascript
 fetch('api/video/test', {
-   method: 'GET',
+	method: 'GET',
 });
 ```
 
@@ -457,36 +462,33 @@ fetch('api/video/test', {
 
 > Type: PUT
 
-
 ```http request
    PUT api/video
 ```
 
-
 ## Expected Values
-| # | naming    | type   | specs                 |
-|---|-----------|--------|-----------------------|
-| 1 | title     | string | video title           |
-| 1 | body      | string | new video description |
-| 1 | shortBody | string | new short description |
 
+| #   | naming    | type   | specs                 |
+| --- | --------- | ------ | --------------------- |
+| 1   | title     | string | video title           |
+| 1   | body      | string | new video description |
+| 1   | shortBody | string | new short description |
 
 ```javascript
 fetch('api/video', {
-  body: {
-    video: {
-      title: "123",
-       body: "123",
-       shortBody: "123"
-    }
-  },
-   method: 'PUT',
-   headers: {
-    Authentication: 'Beqrer 123'
-   }
+	body: {
+		video: {
+			title: '123',
+			body: '123',
+			shortBody: '123',
+		},
+	},
+	method: 'PUT',
+	headers: {
+		Authentication: 'Beqrer 123',
+	},
 });
 ```
-
 
 ## Returned Object
 
@@ -532,34 +534,31 @@ fetch('api/video', {
 
 > Type: POST
 
-
 ```http request
    POST api/commants
 ```
 
-
 ## Expected Values
-| # | naming | type   | specs         |
-|---|--------|--------|---------------|
-| 1 | title  | string | comment title |
-| 2 | body   | string | comment body  |
 
+| #   | naming | type   | specs         |
+| --- | ------ | ------ | ------------- |
+| 1   | title  | string | comment title |
+| 2   | body   | string | comment body  |
 
 ```javascript
 fetch('api/comments', {
-  body: {
-    video: {
-      title: "123",
-      body: "123",
-    }
-  },
-   method: 'POST',
-   headers: {
-    Authentication: 'Beqrer 123'
-   }
+	body: {
+		video: {
+			title: '123',
+			body: '123',
+		},
+	},
+	method: 'POST',
+	headers: {
+		Authentication: 'Beqrer 123',
+	},
 });
 ```
-
 
 ## Returned Object
 
@@ -567,27 +566,20 @@ fetch('api/comments', {
 
 ## Get Comment By Id
 
-
-
 > Type: GET
-
 
 ```http request
    GET api/commants/:id
 ```
 
-
-
-
 ```javascript
 fetch('api/commants/1', {
-   method: 'GET',
-   headers: {
-    Authentication: 'Beqrer 123'
-   }
+	method: 'GET',
+	headers: {
+		Authentication: 'Beqrer 123',
+	},
 });
 ```
-
 
 ## Returned Object
 
@@ -611,26 +603,25 @@ fetch('api/commants/1', {
 }
 ```
 
-
 ## Expected Values
+
 No needed fields
 
 # Delete Comment
 
->**Required**
+> **Required**
 > Authentication Required
 
 > Type: GET
+
 ```javascript
 fetch('api/commants/1', {
-  
-   method: 'DELETE',
-   headers: {
-    Authentication: 'Beqrer 123'
-   }
+	method: 'DELETE',
+	headers: {
+		Authentication: 'Beqrer 123',
+	},
 });
 ```
-
 
 ## Returned Object
 
@@ -638,36 +629,32 @@ fetch('api/commants/1', {
 
 ```
 
-
 # Edit Comment
 
->**Required**
+> **Required**
 > Authentication Required
 
 > Type: PUT
 
-
 ## Expected values
 
-| # | naming | type   | specs         |
-|---|--------|--------|---------------|
-| 1 | title  | string | comment title |
-| 2 | body   | string | comment body  |
-
+| #   | naming | type   | specs         |
+| --- | ------ | ------ | ------------- |
+| 1   | title  | string | comment title |
+| 2   | body   | string | comment body  |
 
 ```javascript
 fetch('api/commants/1', {
-  body: {
-    title: 'test',
-    body: 'test' 
-  },
-   method: 'PUT',
-   headers: {
-    Authentication: 'Beqrer 123'
-   }
+	body: {
+		title: 'test',
+		body: 'test',
+	},
+	method: 'PUT',
+	headers: {
+		Authentication: 'Beqrer 123',
+	},
 });
 ```
-
 
 ## Returned Object
 
@@ -705,3 +692,175 @@ fetch('api/commants/1', {
 }
 ```
 
+> **Note**
+> These methods uses query params
+
+# Likes / Dislikes
+
+## Likes
+
+> Base route
+> api/like/
+
+## Create Like
+
+> **Required**
+> Authentication needed
+
+> Type: Post
+
+## Expected values
+
+| #   | naming    | type   | specs            |
+| --- | --------- | ------ | ---------------- |
+| 1   | videoId   | number | liked video id   |
+| 2   | commentId | number | liked comment id |
+
+# Example
+
+```javascript
+fetch('api/like/', {
+	body: {
+		commentId: 1,
+	},
+	method: 'POST',
+	headers: {
+		Authentication: 'Beqrer 123',
+	},
+});
+```
+
+# Returned Object
+
+```json
+ {
+	"like": {
+		"id": 1,
+		"author": {
+			....
+		},
+		"likedVideo": {},
+		"likedComment": {
+			"id": 1,
+			"isLiked": true,
+			...,
+			"likesCount": 1
+		}
+	}
+}
+```
+
+## Remove Like
+
+> **Required**
+> Authentication needed
+
+> Type: DELETE
+
+## Expected values
+
+> **Note**
+> Expecting query
+
+> /api/like/../..?dislikeId=
+
+# Example
+
+```javascript
+fetch('api/like/vieo/1?likeId=1', {
+	method: 'DELETE',
+	headers: {
+		Authentication: 'Beqrer 123',
+	},
+});
+```
+
+# Returned Object
+
+```json
+ nothing
+```
+
+# Dislikes
+
+> Base route
+> api/dislike/
+
+## Create Dislike
+
+> **Required**
+> Authentication needed
+
+> Type: Post
+
+## Expected values
+
+| #   | naming    | type   | specs            |
+| --- | --------- | ------ | ---------------- |
+| 1   | videoId   | number | liked video id   |
+| 2   | commentId | number | liked comment id |
+
+# Example
+
+```javascript
+fetch('api/dislike/', {
+	body: {
+		commentId: 1,
+	},
+	method: 'POST',
+	headers: {
+		Authentication: 'Beqrer 123',
+	},
+});
+```
+
+# Returned Object
+
+```json
+ {
+	"dislike": {
+		"id": 1,
+		"author": {
+			....
+		},
+		"dislikedVideo": {},
+		"dislikedComment": {
+			"id": 1,
+			"isDisliked": true,
+			...,
+			"dislikesCount": 1
+		}
+	}
+}
+```
+
+## Remove Like
+
+> **Required**
+> Authentication needed
+
+> Type: DELETE
+
+## Expected values
+
+> **Note**
+> Expecting query
+
+> /api/dislike/../..?dislikeId=
+
+# Example
+
+```javascript
+fetch('api/dislike/vieo/1?likeId=1', {
+	method: 'DELETE',
+	headers: {
+		Authentication: 'Beqrer 123',
+	},
+});
+```
+
+# Returned Object
+
+```json
+ nothing
+```

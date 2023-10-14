@@ -1,4 +1,4 @@
-export  const uploadVideoScheme = {
+export const uploadVideoScheme = {
 	type: 'object',
 	properties: {
 		file: {

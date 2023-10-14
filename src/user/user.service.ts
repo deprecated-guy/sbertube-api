@@ -1,14 +1,14 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { CommentEntity, UserEntity, VideoEntity } from '@entity';
+import { UserEntity, VideoEntity } from '@entity';
 import { Repository } from 'typeorm';
-import { User, UserEdit } from '@shared';
+import { CommentDto, User, UserDto, UserEdit, VideoDto } from '@shared';
 import * as bcrypt from 'bcrypt';
 import { format } from 'date-fns';
 
 @Injectable()
 export class UserService {
-	public async editUser(data: UserEdit): Promise<User> {
+	public async editUser(data: UserEdit): Promise<UserDto> {
 		const user = await this.userRepo.findOne({
 			where: {
 				email: data.email,
@@ -53,7 +53,7 @@ export class UserService {
 		await this.userRepo.remove(user);
 	}
 
-	public makeDto(user: UserEntity): User {
+	public makeDto(user: UserEntity): UserDto {
 		const dto = user;
 
 		delete dto.checkPassword;
@@ -63,40 +63,44 @@ export class UserService {
 			return video.isViewed;
 		});
 
-		const videosWithAuthor = dto.videos.map((video) => {
+		const comments = dto.comments.map((c) => {
 			return {
-				...video,
-				comments: video.comments,
-				path: video.path,
-				author: {
-					id: dto.id,
-					username: dto.username,
-					password: dto.password,
-					comments: dto.comments as unknown as CommentEntity[],
-					videos: dto.videos as unknown as VideoEntity[],
-					email: dto.email,
-					token: dto.token,
+				comment: {
+					...c,
+					author: c.author as unknown as UserDto,
+					commentedVideo: c.commentedVideo,
+				},
+			};
+		});
+
+		const videosWithAuthor = dto.videos.map((video) => {
+			console.log(video.author);
+			return {
+				video: {
+					...video,
+					comments: comments as unknown as CommentDto[],
+					path: video.path,
+					author: {
+						user: {
+							...video.author,
+						},
+					},
 				},
 			};
 		});
 
 		return {
 			user: {
-				id: dto.id,
+				watchedVideos: watchedVideos as unknown as VideoDto[],
 				username: dto.username,
 				password: dto.password,
-				likes: dto.likes,
-				comments: dto.comments as unknown as CommentEntity[],
-				videos: videosWithAuthor as unknown as VideoEntity[],
-				viewedVideos: watchedVideos as unknown as VideoEntity[],
+				comments: dto.comments as unknown as CommentDto[],
+				videos: videosWithAuthor as unknown as VideoDto[],
 				email: dto.email,
 				token: dto.token,
 				registerDate: dto.registerDate,
 				registerTime: dto.registerTime,
-				timeAfterRegister: format(
-					Date.now() - Number(dto.registerTime),
-					'Y.M.dd HH:mm:ss',
-				),
+				timeAfterRegister: format(Date.now() - Number(dto.registerTime), 'Y.M.dd HH:mm:ss'),
 			},
 		};
 	}

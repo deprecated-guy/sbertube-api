@@ -7,6 +7,7 @@ export class CommentInput {
 		example: '1',
 	})
 	videoId: number;
+
 	@ApiProperty({
 		name: 'title',
 		title: 'title',
@@ -19,4 +20,6 @@ export class CommentInput {
 		example: 'My Best Comment Ever',
 	})
 	body: string;
+
+	editedAt: string;
 }

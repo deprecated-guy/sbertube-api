@@ -11,23 +11,10 @@ import {
 	UsePipes,
 	ValidationPipe,
 } from '@nestjs/common';
-import {
-	JwtGuard,
-	CommentInput,
-	Comment,
-	CommentDto,
-	UserRequest,
-} from '@shared';
+import { JwtGuard, CommentInput, Comment, CommentDto, UserRequest } from '@shared';
 import { CommentService } from './comment.service';
 import { from } from 'rxjs';
-import {
-	ApiBearerAuth,
-	ApiBody,
-	ApiForbiddenResponse,
-	ApiHeader,
-	ApiResponse,
-	ApiTags,
-} from '@nestjs/swagger';
+import { ApiBearerAuth, ApiBody, ApiForbiddenResponse, ApiHeader, ApiResponse, ApiTags } from '@nestjs/swagger';
 
 @Controller('comment')
 export class CommentController {
@@ -74,11 +61,7 @@ export class CommentController {
 	@UseGuards(JwtGuard)
 	@UsePipes(new ValidationPipe())
 	@Put(':id')
-	editComment(
-		@Req() req: UserRequest,
-		@Param('id') id: number,
-		comment: CommentInput,
-	) {
+	editComment(@Req() req: UserRequest, @Param('id') id: number, comment: CommentInput) {
 		return from(this.commentService.editComment(id, comment));
 	}
 
