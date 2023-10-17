@@ -5,6 +5,7 @@ import { Repository } from 'typeorm';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService, User, UserLogin, UserRegister } from '@shared';
 import * as bcrypt from 'bcrypt';
+import { hexify, randomColorHelper } from '../shared/services/helpers';
 
 @Injectable()
 export class AuthService {
@@ -35,6 +36,9 @@ export class AuthService {
 		user.token = token;
 		user.videos = [];
 		user.comments = [];
+		user.registerDate = new Date().toISOString();
+		user.avatarBackground = hexify(randomColorHelper(103, 255));
+		user.bannerBackground = hexify(randomColorHelper(100, 255));
 
 		await this.userRepo.save(user);
 		return this.makeDto(user);
@@ -43,6 +47,8 @@ export class AuthService {
 		const user = await this.userRepo
 			.createQueryBuilder('user')
 			.leftJoinAndSelect('user.videos', 'videos')
+			.leftJoinAndSelect('user.likes', 'likes')
+			.leftJoinAndSelect('user.likes', 'dislikes')
 			.where('user.username = :username', { username: userLogin.username })
 			.getOne();
 		const checkPassword = bcrypt.compare(userLogin.password, user.password);
@@ -58,6 +64,10 @@ export class AuthService {
 		const dto = Object.assign({}, user);
 		dto.videos = user.videos;
 		dto.comments = user.comments;
+		dto.likes = user.likes;
+		dto.dislikes = user.dislikes;
+		dto.avatarBackground = user.avatarBackground;
+		dto.bannerBackground = user.bannerBackground;
 		delete dto.checkPassword;
 		delete dto.id;
 

@@ -9,4 +9,10 @@ export class UserEdit {
 
 	@ApiProperty({ description: 'Password' })
 	password: string;
+
+	@ApiProperty({ description: 'Banner Background' })
+	bannerBackground: string;
+
+	@ApiProperty({ description: 'Avatar Background' })
+	avatarBackground: string;
 }

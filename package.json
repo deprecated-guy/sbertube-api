@@ -20,7 +20,7 @@
 		"test:e2e": "jest --config ./test/jest-e2e.json",
 		"lint": "eslint --fix --quiet --ext .js,.ts",
 		"lintcheck": "eslint --quiet --ext .js,.ts.",
-		"prepare": "husky install & npx lint-staged",
+		"prepare": "husky install & npx lint-staged & npx simple-git-hooks",
 		"typecheck": "tsc",
 		"commitlint": "commitlint --edit"
 	},

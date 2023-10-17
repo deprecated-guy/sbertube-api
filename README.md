@@ -4,6 +4,24 @@
 
 ## The Smallest and powerful API for new generation video service for creators.
 
+> **Attempt**
+> This repository is dockerized
+
+```bash
+
+docker run -e SECRET_KEY=your_secret_key \
+           -e EXPIRES_IN=your_expires_in \
+           -e DB_HOST=your_db_host \
+           -e DB_NAME=your_db_name \
+           -e DB_PORT=your_db_port \
+           -e DB_PASSWORD=your_db_password \
+           -e DB_USERNAME=your_db_username \
+           -e DROPSCHEMA=your_dropschema \
+           -e SYNCHRONIZE=your_synchronize \
+           -e MIGRATIONS_RUN=your_migrations_run \
+           0xc000007bl/sbertube-backend:latest
+```
+
 # Methods
 
 1. Auth - Authorization
@@ -513,8 +531,7 @@ fetch('api/video', {
                "title": "123",
                "body": "123",
                "shortBody": "123",
-               "path": "static/video/Screencast 2023-09-05 22:13:25.avi",
-               ...
+               "path": "static/video/Screencast 2023-09-05 22:13:25.avi"
             }
          ]
       }
@@ -590,17 +607,17 @@ fetch('api/commants/1', {
       "title": "123",
       "body": "123",
       "author": {
-       ...
+
       },
          "commentedVideo": {
             "id": 1,
             "title": "test",
-            "body": "test",
-            ...
+            "body": "test"
+
          }
       }
    }
-}
+
 ```
 
 ## Expected Values
@@ -677,15 +694,14 @@ fetch('api/commants/1', {
                "title": "123",
                "body": "123",
                "shortBody": "123",
-               "path": "static/video/Screencast 2023-09-05 22:13:25.avi",
-               ...
+               "path": "static/video/Screencast 2023-09-05 22:13:25.avi"
+
             }
          ],
                  "commentedVideo": {
             "id": 1,
                     "title": "test",
-                    "body": "test",
-         ...
+                    "body": "test"
          }
       }
    }
@@ -733,17 +749,14 @@ fetch('api/like/', {
 # Returned Object
 
 ```json
- {
+{
 	"like": {
 		"id": 1,
-		"author": {
-			....
-		},
+		"author": {},
 		"likedVideo": {},
 		"likedComment": {
 			"id": 1,
 			"isLiked": true,
-			...,
 			"likesCount": 1
 		}
 	}
@@ -777,8 +790,8 @@ fetch('api/like/vieo/1?likeId=1', {
 
 # Returned Object
 
-```json
- nothing
+```js
+// nothing
 ```
 
 # Dislikes
@@ -817,17 +830,14 @@ fetch('api/dislike/', {
 # Returned Object
 
 ```json
- {
+{
 	"dislike": {
 		"id": 1,
-		"author": {
-			....
-		},
+		"author": {},
 		"dislikedVideo": {},
 		"dislikedComment": {
 			"id": 1,
 			"isDisliked": true,
-			...,
 			"dislikesCount": 1
 		}
 	}
@@ -861,6 +871,6 @@ fetch('api/dislike/vieo/1?likeId=1', {
 
 # Returned Object
 
-```json
- nothing
+```js
+// nothing
 ```

@@ -6,6 +6,7 @@ import {
 	Param,
 	Post,
 	Put,
+	Query,
 	Req,
 	Res,
 	UploadedFile,
@@ -35,16 +36,17 @@ import { v4 as uuid } from 'uuid';
 
 @Controller('video')
 export class VideoController {
-	@ApiBearerAuth()
 	@ApiTags('Get Videos')
 	@UsePipes(new ValidationPipe())
 	@ApiForbiddenResponse()
 	@Get()
-	async getAll() {
-		return await this.videoService.getAll();
+	async getAll(@Query('p') search: string) {
+		console.log(search);
+		if (search) {
+			return await this.videoService.getAll(search);
+		} else return await this.videoService.getAll();
 	}
 
-	@ApiBearerAuth()
 	@ApiBearerAuth('Authorization')
 	@ApiHeader({
 		name: 'Authorization',
@@ -82,7 +84,6 @@ export class VideoController {
 	}
 
 	@ApiTags('Edit Video')
-	@ApiBearerAuth()
 	@ApiBearerAuth('Authorization')
 	@ApiHeader({
 		name: 'Authorization',
@@ -101,10 +102,12 @@ export class VideoController {
 
 		return await this.videoService.updateVideo(body, title, user);
 	}
+
 	@Get('v/:videoTitle')
 	async getVideoDtoByTitle(@Param('videoTitle') title: string) {
 		return await this.videoService.getVideoByTitle(title);
 	}
+
 	@ApiBearerAuth('Authorization')
 	@ApiHeader({
 		name: 'Authorization',

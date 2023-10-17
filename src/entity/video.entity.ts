@@ -47,9 +47,9 @@ export class VideoEntity {
 	@Column({ default: false })
 	isDisliked: boolean;
 
-	@Column()
+	@Column({ default: 0 })
 	likesCount: number;
 
-	@Column()
+	@Column({ default: 0 })
 	dislikesCount: number;
 }
