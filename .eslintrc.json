@@ -14,7 +14,7 @@
 					"warn",
 					{ "vars": "all", "varsIgnorePattern": "^_", "args": "after-used", "argsIgnorePattern": "^_" }
 				],
-				"indent": ["error", "tab"],
+				"indent": ["error", "tab", { "ignoredNodes": ["PropertyDefinition"] }],
 				"linebreak-style": ["error", "unix"],
 				"max-len": [
 					"error",

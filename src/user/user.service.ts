@@ -54,6 +54,8 @@ export class UserService {
 		user.videos.map((video) => this.videoRepo.remove(video));
 
 		await this.userRepo.remove(user);
+
+		return 'Account successfully deleted';
 	}
 
 	public makeDto(user: UserEntity): UserDto {

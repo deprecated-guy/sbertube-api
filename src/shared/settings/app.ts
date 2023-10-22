@@ -1,7 +1,5 @@
 import { TypeOrmModuleAsyncOptions, TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { JwtModuleOptions } from '@nestjs/jwt';
-import { ServeStaticModuleOptions } from '@nestjs/serve-static';
-import { join } from 'path';
 import { EntityClassOrSchema } from '@nestjs/typeorm/dist/interfaces/entity-class-or-schema.type';
 import { featureMap } from './featureMap';
 import { Provider } from '@nestjs/common';
@@ -40,11 +38,6 @@ export const jwtSettings: JwtModuleOptions = {
 	signOptions: {
 		expiresIn: process.env.EXPIRES_IN,
 	},
-};
-
-export const serveStaticOptions: ServeStaticModuleOptions = {
-	rootPath: join(__dirname, '..', 'static'),
-	renderPath: '',
 };
 
 export const typeOrmFeaturesFactory = (entityNames: string[]): EntityClassOrSchema[] =>
