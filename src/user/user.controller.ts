@@ -36,7 +36,7 @@ export class UserController {
 	@ApiForbiddenResponse()
 	@UsePipes(new ValidationPipe())
 	@UseGuards(JwtGuard)
-	@Delete()
+	@Delete('account/delete')
 	async deleteUser(@Req() req: UserRequest) {
 		return await this.userService.deleteUser(req.user);
 	}

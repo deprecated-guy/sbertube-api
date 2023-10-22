@@ -27,11 +27,17 @@ export class UserEntity {
 	@Column('')
 	registerDate: string;
 
-	@Column('')
+	@Column({ default: '' })
 	timeAfterRegister: string;
 
 	@Column({ default: 0, type: 'bigint' })
 	registerTime: bigint;
+
+	@Column('')
+	activationCode: number;
+
+	@Column({ default: false })
+	isActivated: boolean;
 
 	@OneToMany(() => VideoEntity, (video) => video.isViewed)
 	viewedVideos: VideoEntity[];

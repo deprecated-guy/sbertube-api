@@ -6,28 +6,31 @@ import { JwtService } from '@nestjs/jwt';
 import { ConfigService, User, UserLogin, UserRegister } from '@shared';
 import * as bcrypt from 'bcrypt';
 import { hexify, randomColorHelper } from '../shared/services/helpers';
+import { EmailService } from '../email.service';
 
 @Injectable()
 export class AuthService {
-	async createUser(userData: UserRegister) {
-		const payload = {
-			username: userData.username,
-			email: userData.email,
-			password: userData.password,
-		};
-		const token = this.jwtService.sign(payload, {
-			secret: this.config.secret,
-		});
-
-		const user = this.userRepo.create(userData);
-
+	async createUser(userData?: UserRegister) {
+		const findByEmail = await this.userRepo.findOne({ where: { email: userData.email } });
 		const findedUser = await this.userRepo.findOne({
 			where: {
 				username: userData.username,
 			},
 		});
 
-		if (findedUser) {
+		const payload = {
+			username: userData.username,
+			email: userData.email,
+			password: userData.password,
+		};
+
+		const token = this.jwtService.sign(payload, {
+			secret: this.config.secret,
+		});
+
+		const user = this.userRepo.create(userData);
+
+		if (findedUser || findByEmail) {
 			throw new HttpException('This user already registered', HttpStatus.CONFLICT);
 		}
 
@@ -37,12 +40,22 @@ export class AuthService {
 		user.videos = [];
 		user.comments = [];
 		user.registerDate = new Date().toISOString();
+		user.timeAfterRegister = '';
+		user.activationCode = this.mailService.generateCode();
 		user.avatarBackground = hexify(randomColorHelper(103, 255));
 		user.bannerBackground = hexify(randomColorHelper(100, 255));
 
-		await this.userRepo.save(user);
-		return this.makeDto(user);
+		return this.makeDto(await this.userRepo.save(user));
 	}
+
+	async verifyUser(id: number, code: string) {
+		const user = await this.userRepo.findOne({ where: { id } });
+		if (user.activationCode === +code) {
+			user.isActivated = true;
+			return this.makeDto(user);
+		} else throw new HttpException('Incorrect code', HttpStatus.BAD_REQUEST);
+	}
+
 	async loginUser(userLogin: UserLogin) {
 		const user = await this.userRepo
 			.createQueryBuilder('user')
@@ -65,11 +78,11 @@ export class AuthService {
 		dto.videos = user.videos;
 		dto.comments = user.comments;
 		dto.likes = user.likes;
+		dto.isActivated = user.isActivated;
 		dto.dislikes = user.dislikes;
 		dto.avatarBackground = user.avatarBackground;
 		dto.bannerBackground = user.bannerBackground;
 		delete dto.checkPassword;
-		delete dto.id;
 
 		return { user: dto };
 	}
@@ -86,5 +99,6 @@ export class AuthService {
 		@InjectRepository(UserEntity) private userRepo: Repository<UserEntity>,
 		private jwtService: JwtService,
 		private config: ConfigService,
+		private mailService: EmailService,
 	) {}
 }
