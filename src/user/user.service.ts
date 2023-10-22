@@ -5,6 +5,7 @@ import { Repository } from 'typeorm';
 import { CommentDto, User, UserDto, UserEdit, VideoDto } from '@shared';
 import * as bcrypt from 'bcrypt';
 import { format } from 'date-fns';
+import { hash } from 'bcrypt';
 
 @Injectable()
 export class UserService {
@@ -19,31 +20,33 @@ export class UserService {
 		if (!user) {
 			throw new HttpException('User Not Found', HttpStatus.NOT_FOUND);
 		}
+		const checked = await bcrypt.compare(data.password, user.password);
+		console.log(checked);
 
-		const password = await bcrypt.hash(data.password, 10);
-
-		const newUser = {
-			...user,
-			password: password,
-			checkPassword: password,
+		const updatedFields = {
+			username: data.username !== '' ? data.username : user.username,
+			bannerBackground: data.bannerBackground !== '' ? data.bannerBackground : user.bannerBackground,
+			avatarBackground: data.avatarBackground !== '' ? data.avatarBackground : user.avatarBackground,
+			password: !checked ? await hash(data.password, 10) : user.password,
+			checkPassword: !checked ? await hash(data.password, 10) : user.checkPassword,
 		};
 
-		Object.assign(user, newUser);
+		await this.userRepo.update(user.id, updatedFields);
 
-		await this.userRepo.save(user);
-
-		const editedUser = await this.userRepo.findOne({
-			where: { email: user.email },
+		const findUser = await this.userRepo.findOne({
+			where: {
+				email: data.email,
+			},
 			relations: ['videos', 'comments', 'likes'],
 		});
 
-		return this.makeDto(editedUser);
+		return this.makeDto(await this.userRepo.save(findUser));
 	}
 
 	public async deleteUser(userData: User) {
 		const user = await this.userRepo.findOne({
 			where: { id: userData.user.id },
-			relations: ['videos', 'comments', 'likes'],
+			relations: ['videos', 'comments', 'likes', 'dislikes'],
 		});
 
 		if (!user) throw new HttpException('User Not Found', HttpStatus.NOT_FOUND);
@@ -74,7 +77,6 @@ export class UserService {
 		});
 
 		const videosWithAuthor = dto.videos.map((video) => {
-			console.log(video.author);
 			return {
 				video: {
 					...video,
@@ -91,6 +93,8 @@ export class UserService {
 
 		return {
 			user: {
+				bannerBackground: dto.bannerBackground,
+				avatarBackground: dto.avatarBackground,
 				watchedVideos: watchedVideos as unknown as VideoDto[],
 				username: dto.username,
 				password: dto.password,
@@ -123,6 +127,7 @@ export class UserService {
 			where: { id: userData.user.id },
 			relations: ['videos', 'comments', 'likes'],
 		});
+		console.log(user);
 		if (!user) throw new HttpException('Not Found', HttpStatus.NOT_FOUND);
 		return this.makeDto(user);
 	}

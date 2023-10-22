@@ -47,6 +47,12 @@ export class UserEntity {
 	@OneToMany(() => DislikeEntity, (like) => like.author)
 	dislikes: DislikeEntity[];
 
+	@Column('')
+	bannerBackground: string;
+
+	@Column('')
+	avatarBackground: string;
+
 	@BeforeInsert()
 	async hash() {
 		this.password = await bcrypt.hash(this.password, 10);

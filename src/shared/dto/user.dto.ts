@@ -19,4 +19,6 @@ export interface UserResponse {
 	registerTime: bigint;
 	timeAfterRegister: string;
 	watchedVideos: VideoDto[];
+	bannerBackground: string;
+	avatarBackground: string;
 }

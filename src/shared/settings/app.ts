@@ -24,7 +24,7 @@ export const DbConnectionAsync: TypeOrmModuleAsyncOptions = {
 };
 
 export const DBConnection: TypeOrmModuleOptions = {
-	database: 'sbtb',
+	database: 'sb43',
 	type: 'mysql',
 	username: 'root',
 	port: 3306,

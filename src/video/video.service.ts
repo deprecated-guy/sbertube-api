@@ -43,10 +43,26 @@ export class VideoService {
 		throw new HttpException('This video may be uploaded recently', HttpStatus.FOUND);
 	}
 
-	public async getAll(): Promise<VideoDto[]> {
+	public async getAll(search?: string): Promise<VideoDto[]> {
 		const videos = await this.videoRepo.find({
 			relations: ['author', 'comments', 'likes'],
 		});
+
+		if (search) {
+			return videos
+				.filter((v) => v.title === search)
+				.map((video) => {
+					return {
+						video: {
+							...video,
+							likes: video.likes as unknown as LikeDto[],
+							path: video.path,
+							author: video.author as unknown as UserDto,
+							comments: video.comments as unknown as CommentDto[],
+						},
+					};
+				});
+		}
 
 		return videos.map((video) => ({
 			video: {
