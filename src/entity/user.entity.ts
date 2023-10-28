@@ -57,7 +57,13 @@ export class UserEntity {
 	bannerBackground: string;
 
 	@Column('')
+	bannerBackgroundImage: string;
+
+	@Column('')
 	avatarBackground: string;
+
+	@Column('')
+	avatarBackgroundImage: string;
 
 	@BeforeInsert()
 	async hash() {

@@ -20,5 +20,7 @@ export interface UserResponse {
 	timeAfterRegister: string;
 	watchedVideos: VideoDto[];
 	bannerBackground: string;
+	bannerBackgroundImage: string;
 	avatarBackground: string;
+	avatarBackgroundImage: string;
 }
