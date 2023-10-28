@@ -78,15 +78,6 @@ jobs:
       - name: Build
         run: pnpm run build
 
-  build-vercel:
-    runs-on: ${{ matrix.os }}
-
-    timeout-minutes: 10
-
-    strategy:
-      matrix:
-        os: [ubuntu-latest]
-        node_version: [18]
-      fail-fast: false
+  
 
 
