@@ -15,7 +15,6 @@ import { DislikeModule } from './dislike/dislike.module';
 import { MailerModule } from '@nestjs-modules/mailer';
 import { LikeModule } from './like/like.module';
 import { PugAdapter } from '@nestjs-modules/mailer/dist/adapters/pug.adapter';
-import { join } from 'path';
 import { EmailService } from './email.service';
 import * as path from 'path';
 dotenv.config();
@@ -27,7 +26,7 @@ dotenv.config();
 		VideoModule,
 		CommentModule,
 		ServeStaticModule.forRoot({
-			rootPath: path.resolve(__dirname, '../..', 'static'),
+			rootPath: path.resolve(process.cwd(), 'static'),
 			renderPath: '',
 		}),
 		JwtModule.register(jwtSettings),
@@ -47,7 +46,7 @@ dotenv.config();
 				from: '"No Reply" <emaple@example.com>',
 			},
 			template: {
-				dir: join(__dirname, '..', 'emails'),
+				dir: path.resolve(process.cwd(), 'emails'),
 				adapter: new PugAdapter(),
 			},
 		}),

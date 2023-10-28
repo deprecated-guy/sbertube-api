@@ -1,8 +1,28 @@
-import { Body, Controller, Delete, Get, Param, Put, Req, UseGuards, UsePipes, ValidationPipe } from '@nestjs/common';
+import {
+	Body,
+	Controller,
+	Delete,
+	Get,
+	Param,
+	Put,
+	Req,
+	Res,
+	UploadedFile,
+	UseGuards,
+	UseInterceptors,
+	UsePipes,
+	ValidationPipe,
+} from '@nestjs/common';
 import { UserEdit, JwtGuard, User } from '@shared';
 import { UserService } from './user.service';
 import { UserRequest } from '@shared';
 import { ApiBearerAuth, ApiBody, ApiForbiddenResponse, ApiHeader, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { diskStorage } from 'multer';
+import * as path from 'path';
+import { v4 as uuid } from 'uuid';
+import { Response } from 'express';
+import * as process from 'process';
 
 @Controller('user')
 export class UserController {
@@ -56,6 +76,63 @@ export class UserController {
 	@Get('account')
 	async getCurrentUser(@Req() req: UserRequest) {
 		return await this.userService.getCurrentUser(req.user);
+	}
+
+	@ApiTags('Upload UserBanner  Background Image')
+	@ApiBearerAuth('Authorization')
+	@ApiForbiddenResponse()
+	@UsePipes(new ValidationPipe())
+	@UseInterceptors(
+		FileInterceptor('file', {
+			storage: diskStorage({
+				destination: './static/video',
+				filename(req, file: Express.Multer.File, callback: (error: Error | null, filename: string) => void) {
+					const filename = path.parse(file.originalname).name.replace(/./g, '') + uuid();
+
+					const ext = path.parse(file.originalname).ext;
+
+					callback(null, `${filename}${ext}`);
+				},
+			}),
+		}),
+	)
+	@UseGuards(JwtGuard)
+	@Put('account/updateBanner')
+	async updateBannerImage(@Req() req: UserRequest, @UploadedFile() file: Express.Multer.File) {
+		return await this.userService.updateUserBannerImage(req.user, file.filename);
+	}
+	@ApiTags('Upload User Avatart  Background Image')
+	@ApiBearerAuth('Authorization')
+	@ApiForbiddenResponse()
+	@UsePipes(new ValidationPipe())
+	@UseInterceptors(
+		FileInterceptor('file', {
+			storage: diskStorage({
+				destination: './static/video',
+				filename(req, file: Express.Multer.File, callback: (error: Error | null, filename: string) => void) {
+					const filename = path.parse(file.originalname).name.replace(/./g, '') + uuid();
+
+					const ext = path.parse(file.originalname).ext;
+
+					callback(null, `${filename}${ext}`);
+				},
+			}),
+		}),
+	)
+	@UseGuards(JwtGuard)
+	@Put('account/updateBanner')
+	async updateAvatarImage(@Req() req: UserRequest, @UploadedFile() file: Express.Multer.File) {
+		return await this.userService.updateUserAvatarImage(req.user, file.filename);
+	}
+
+	@Get('images/banner/:name')
+	getBannerImage(@Param('name') name: string, @Res() res: Response) {
+		return res.sendFile(path.resolve(process.cwd(), 'static', 'images', 'banner', name));
+	}
+
+	@Get('images/avatar/:name')
+	getAvatarImage(@Param('name') name: string, @Res() res: Response) {
+		return res.sendFile(path.resolve(process.cwd(), 'static', 'images', 'avatar', name));
 	}
 
 	@ApiTags('Get User By Username')

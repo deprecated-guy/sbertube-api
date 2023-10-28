@@ -5,6 +5,10 @@ import { featureMap } from './featureMap';
 import { Provider } from '@nestjs/common';
 import { ServiceMap } from './serviceMap';
 import { ConfigService } from '../services';
+import * as env from 'dotenv';
+env.config();
+
+const config = new ConfigService();
 
 export const DbConnectionAsync: TypeOrmModuleAsyncOptions = {
 	inject: [ConfigService],
@@ -22,14 +26,14 @@ export const DbConnectionAsync: TypeOrmModuleAsyncOptions = {
 };
 
 export const DBConnection: TypeOrmModuleOptions = {
-	database: 'sb43',
+	database: config.dbNAme,
 	type: 'mysql',
-	username: 'root',
+	username: config.dbUsername,
 	port: 3306,
-	password: '',
+	password: config.dbPassword,
 	entities: ['dist/**/*.entity.js'],
-	host: 'localhost',
-	synchronize: true,
+	host: config.dbHost,
+	synchronize: !!config.synchronize,
 };
 
 export const jwtSettings: JwtModuleOptions = {

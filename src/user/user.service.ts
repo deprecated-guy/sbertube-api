@@ -95,6 +95,8 @@ export class UserService {
 
 		return {
 			user: {
+				bannerBackgroundImage: dto.bannerBackgroundImage,
+				avatarBackgroundImage: dto.avatarBackgroundImage,
 				bannerBackground: dto.bannerBackground,
 				avatarBackground: dto.avatarBackground,
 				watchedVideos: watchedVideos as unknown as VideoDto[],
@@ -132,6 +134,28 @@ export class UserService {
 		console.log(user);
 		if (!user) throw new HttpException('Not Found', HttpStatus.NOT_FOUND);
 		return this.makeDto(user);
+	}
+
+	public async updateUserBannerImage(user: User, filename: string) {
+		const findUser = await this.userRepo.findOne({
+			where: { id: user.user.id },
+			relations: ['videos', 'comments', 'likes'],
+		});
+
+		if (!user) throw new HttpException('NOT FOUND', HttpStatus.NOT_FOUND);
+		findUser.bannerBackgroundImage = filename;
+		return this.makeDto(await this.userRepo.save(findUser));
+	}
+
+	public async updateUserAvatarImage(user: User, filename: string) {
+		const findUser = await this.userRepo.findOne({
+			where: { id: user.user.id },
+			relations: ['videos', 'comments', 'likes'],
+		});
+
+		if (!user) throw new HttpException('NOT FOUND', HttpStatus.NOT_FOUND);
+		findUser.avatarBackgroundImage = filename;
+		return this.makeDto(await this.userRepo.save(findUser));
 	}
 
 	constructor(
