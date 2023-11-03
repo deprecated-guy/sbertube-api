@@ -9,12 +9,6 @@ export class CommentInput {
 	videoId: number;
 
 	@ApiProperty({
-		name: 'title',
-		title: 'title',
-		example: 'My Best Comment Ever',
-	})
-	title: string;
-	@ApiProperty({
 		name: 'body',
 		title: 'body',
 		example: 'My Best Comment Ever',

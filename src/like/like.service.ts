@@ -2,97 +2,65 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CommentEntity, LikeEntity, UserEntity, VideoEntity } from '@entity';
 import { Repository } from 'typeorm';
-import { Comment, CommentDto, LikeDto, LikeRequest, User, UserDto, UserResponse, Video, VideoDto } from '@shared';
+import { Comment, CommentDto, LikeDto, User, UserDto, UserResponse, Video, VideoDto } from '@shared';
 
 @Injectable()
 export class LikeService {
-	public async createLike(user: User, like: LikeRequest) {
+	public async likeVideo(user: User, id: number) {
+		const author = await this.userRepo.findOne({
+			where: { id: user.user.id },
+			relations: ['likes'],
+		});
+
+		const video = await this.videoRepo.findOne({
+			where: { id: id },
+			relations: ['likes', 'comments'],
+		});
+
+		if (!user) throw new HttpException('NotAuthorized', HttpStatus.UNAUTHORIZED);
+
+		const newLike = this.likeRepo.create();
+		newLike.author = author;
+
+		newLike.likedVideo = video;
+		video.likesCount += 1;
+		video.isLiked = true;
+
+		if (video.isLiked && video.dislikesCount > 0) {
+			video.dislikesCount -= 1;
+			video.isDisliked = false;
+		}
+		await this.videoRepo.save(video);
+		await this.userRepo.save(author);
+		return this.makeDto(newLike);
+	}
+
+	public async likeComment(user: User, id: number) {
 		const author = await this.userRepo.findOne({
 			where: { id: user.user.id },
 			relations: ['likes'],
 		});
 
 		const comment = await this.commentRepo.findOne({
-			where: { id: like.commentId },
-			relations: ['likes'],
-		});
-
-		const video = await this.videoRepo.findOne({
-			where: { id: like.videoId },
+			where: { id: id },
 			relations: ['likes'],
 		});
 
 		if (!user) throw new HttpException('NotAuthorized', HttpStatus.UNAUTHORIZED);
 
-		const newLike = await this.likeRepo.create();
+		const newLike = this.likeRepo.create();
 		newLike.author = author;
 
-		if (like.commentId) {
-			newLike.likedComment = comment;
-			comment.isLiked = true;
-			comment.likesCount += 1;
-
-			await this.commentRepo.save(comment);
-			return this.makeDto(newLike);
-		} else if (like.videoId) {
-			newLike.likedVideo = video;
-			video.likesCount += 1;
-			video.isLiked = true;
-
-			await this.videoRepo.save(video);
-			return this.makeDto(newLike);
+		newLike.likedComment = comment;
+		comment.likesCount += 1;
+		comment.isLiked = true;
+		if (comment.isDisliked && comment.dislikesCount > 0) {
+			comment.dislikesCount -= 1;
+			comment.isDisliked = false;
 		}
 		await this.userRepo.save(author);
-	}
-
-	public async removeLikeFromComment(user: User, likeId: number, commentId: number) {
-		const author = await this.userRepo.findOne({
-			where: { id: user.user.id },
-			relations: ['likes'],
-		});
-
-		const comment = await this.commentRepo.findOne({
-			where: { id: commentId },
-			relations: ['likes'],
-		});
-
-		if (!author) throw new HttpException('Not authorized', HttpStatus.UNAUTHORIZED);
-
-		if (commentId) {
-			if (!comment) throw new HttpException('Comment not found', HttpStatus.NOT_FOUND);
-
-			const findLike = comment.likes.find((like) => like.id == likeId);
-			comment.likes = comment.likes.filter((like) => like.id !== findLike.id);
-			comment.likesCount -= 1;
-			comment.isLiked = false;
-
-			await this.commentRepo.save(comment);
-			await this.likeRepo.remove(findLike);
-		}
-	}
-
-	public async removeLikeFromVideo(user: User, videoId: number, likeId: number) {
-		const author = await this.userRepo.findOne({
-			where: { id: user.user.id },
-			relations: ['likes'],
-		});
-		const video = await this.videoRepo.findOne({
-			where: { id: videoId },
-			relations: ['likes'],
-		});
-
-		if (!author) throw new HttpException('Not authorized', HttpStatus.UNAUTHORIZED);
-
-		if (videoId) {
-			if (!video) throw new HttpException('Comment not found', HttpStatus.NOT_FOUND);
-			const findLike = video.likes.find((like) => like.id == likeId);
-			video.likes = video.likes.filter((like) => like.id !== findLike.id);
-			video.likesCount -= 1;
-			video.isLiked = false;
-
-			await this.commentRepo.save(video);
-			await this.likeRepo.remove(findLike);
-		}
+		await this.commentRepo.save(comment);
+		return this.makeDto(newLike);
 	}
 
 	private makeDto(entity: LikeEntity): LikeDto {
@@ -103,6 +71,8 @@ export class LikeService {
 		const likedComment: CommentDto = {
 			comment: entity.likedComment as unknown as Comment,
 		};
+
+		console.log(likedComment);
 
 		const author: UserDto = {
 			user: entity.author as unknown as UserResponse,

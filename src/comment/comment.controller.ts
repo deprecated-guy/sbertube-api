@@ -75,8 +75,8 @@ export class CommentController {
 	@UseGuards(JwtGuard)
 	@UsePipes(new ValidationPipe())
 	@Delete(':id')
-	deleteComment(@Req() req: UserRequest, @Param('id') id: number) {
-		return from(this.commentService.delete(id));
+	deleteComment(@Req() req: UserRequest, @Param('id') id: number, input: CommentInput) {
+		return from(this.commentService.delete(id, input.videoId));
 	}
 
 	constructor(private commentService: CommentService) {}

@@ -9,6 +9,7 @@ export class Video {
 	path: string;
 	author: UserDto;
 	comments: CommentDto[];
+	alias: string;
 	likes: LikeDto[];
 	isLiked: boolean;
 }

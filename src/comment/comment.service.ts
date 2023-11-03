@@ -30,8 +30,8 @@ export class CommentService {
 		newComment.editedAt = '';
 		newComment.commentedVideo = video;
 		newComment.author = author;
-		newComment.likes = [];
 		newComment.likesCount = 0;
+		newComment.dislikesCount = 0;
 
 		return this.makeDto(await this.commentRepo.save(newComment));
 	}
@@ -49,14 +49,16 @@ export class CommentService {
 
 		return this.makeDto(await this.commentRepo.save(commentData));
 	}
-	public async delete(id: number) {
-		const comment = await this.commentRepo.findBy({ id });
+	public async delete(id: number, videoId: number) {
+		const findcomment = await this.commentRepo.findOne({ where: { id } });
+		const findVideo = await this.videoRepo.findOne({ where: { id: videoId }, relations: ['comments'] });
+		findVideo.comments.filter((comment) => comment.id !== findcomment.id);
 
-		if (!comment) {
+		if (!findcomment) {
 			throw new HttpException('Not found', HttpStatus.NOT_FOUND);
 		}
-
-		await this.commentRepo.remove(comment);
+		await this.videoRepo.save(findVideo);
+		await this.commentRepo.remove(findcomment);
 
 		return;
 	}
@@ -73,7 +75,6 @@ export class CommentService {
 				editedAt: entity.editedAt,
 				id: entity.id,
 				likes: entity.likes as unknown as LikeDto[],
-				title: entity.title,
 				body: entity.body,
 				likesCount: entity.likesCount,
 				commentedVideo: entity.commentedVideo as unknown as VideoDto,

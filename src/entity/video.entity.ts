@@ -29,6 +29,9 @@ export class VideoEntity {
 	@Column({ default: '' })
 	path: string;
 
+	@Column({ default: '' })
+	alias: string;
+
 	@ManyToOne(() => UserEntity, (user) => user.videos)
 	author: UserEntity;
 

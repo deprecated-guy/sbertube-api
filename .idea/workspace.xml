@@ -5,26 +5,27 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="43cac7f7-7160-4cab-bc93-51041f331aff" name="Changes" comment="feat(docker): fully dockerized repo&#10;* add and set-up docker image container">
-      <change afterPath="$PROJECT_DIR$/emails/template.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/email.service.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/shared/static/index.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/shared/types/code.type.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.eslintrc.json" beforeDir="false" afterPath="$PROJECT_DIR$/.eslintrc.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/nest-cli.json" beforeDir="false" afterPath="$PROJECT_DIR$/nest-cli.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pnpm-lock.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pnpm-lock.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app.module.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/auth/auth.controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/auth/auth.controller.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/auth/auth.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/auth/auth.module.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/auth/auth.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/auth/auth.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/entity/user.entity.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/entity/user.entity.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/comment/comment.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/comment/comment.module.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/comment/comment.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/comment/comment.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dislike/dislike.controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/dislike/dislike.controller.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dislike/dislike.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/dislike/dislike.module.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dislike/dislike.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/dislike/dislike.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/email.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/email.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/entity/comment.entity.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/entity/comment.entity.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/entity/video.entity.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/entity/video.entity.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/like/like.controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/like/like.controller.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/like/like.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/like/like.service.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/shared/settings/app.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/settings/app.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/user/user.controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/user/user.controller.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/user/user.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/user/user.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/shared/settings/serviceMap.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/settings/serviceMap.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/shared/types/comment-input.interface.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/types/comment-input.interface.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/shared/types/comment.interface.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/types/comment.interface.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/shared/types/video.interface.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/types/video.interface.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/video/video.controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/video/video.controller.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/video/video.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/video/video.module.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/video/video.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/video/video.service.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -54,6 +55,9 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 5
+}</component>
   <component name="ProjectId" id="2WQkaLRSxCSaoLPI8fxAImsSZpz" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -76,7 +80,7 @@
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;yarn&quot;,
     &quot;prettierjs.PrettierConfiguration.Package&quot;: &quot;/home/ngdev/Desktop/sbertube/sbertube-api/node_modules/prettier&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;settings.javascript.linters.eslint&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;settings.javascript.prettier&quot;,
     &quot;ts.external.directory.path&quot;: &quot;/home/ngdev/Desktop/sbertube/sbertube-api/node_modules/typescript/lib&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
@@ -170,6 +174,9 @@
     </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
       <changelist id="43cac7f7-7160-4cab-bc93-51041f331aff" name="Changes" comment="" />
@@ -199,6 +206,8 @@
       <workItem from="1697801876482" duration="103000" />
       <workItem from="1697918623625" duration="4376000" />
       <workItem from="1697967850737" duration="4821000" />
+      <workItem from="1698906882957" duration="11785000" />
+      <workItem from="1698927710432" duration="3269000" />
     </task>
     <task id="LOCAL-00001" summary="feat(ci): add ci features&#10;* initialize git hooks&#10;* initialize lint-staged&#10;* set up all hooks needed">
       <created>1696675153754</created>

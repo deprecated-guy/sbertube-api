@@ -9,11 +9,9 @@ export class CommentEntity {
 	id: number;
 
 	@Column()
-	title: string;
-
-	@Column()
 	body: string;
-	@Column()
+
+	@Column({ default: 0 })
 	likesCount: number;
 
 	@ManyToOne(() => UserEntity, (user) => user.comments)
@@ -43,6 +41,6 @@ export class CommentEntity {
 	@OneToMany(() => DislikeEntity, (like) => like.dislikedComment)
 	dislikes: DislikeEntity[];
 
-	@Column()
+	@Column({ default: 0 })
 	dislikesCount: number;
 }

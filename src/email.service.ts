@@ -7,7 +7,7 @@ export class EmailService {
 	public async sendEmail(username: string, email: string, code: number) {
 		console.log(email, code);
 		await this.mailService.sendMail({
-			from: '"No Reply" <example@example.com>',
+			from: '"No Reply" <>',
 			subject: '',
 			to: email,
 			template: createForm(code, username), // Replace with the actual path or name of the template file

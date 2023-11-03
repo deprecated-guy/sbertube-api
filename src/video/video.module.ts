@@ -1,10 +1,12 @@
 import { Module } from '@nestjs/common';
-import { VideoController } from './video.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { MulterModule } from '@nestjs/platform-express';
 
-import { typeOrmFeaturesFactory, typeOrmProvidersFactory } from '@shared';
+import { ConfigService, typeOrmFeaturesFactory } from '@shared';
 import { join } from 'path';
+import { VideoController } from './video.controller';
+import { VideoService } from './video.service';
+import { JwtService } from '@nestjs/jwt';
 
 @Module({
 	controllers: [VideoController],
@@ -14,6 +16,6 @@ import { join } from 'path';
 			dest: join(__dirname, '..', 'static'),
 		}),
 	],
-	providers: typeOrmProvidersFactory(['JWT', 'Video', 'Config']),
+	providers: [VideoService, JwtService, ConfigService],
 })
 export class VideoModule {}

@@ -9,7 +9,7 @@ import * as env from 'dotenv';
 env.config();
 
 const config = new ConfigService();
-
+console.log(config.dbHost);
 export const DbConnectionAsync: TypeOrmModuleAsyncOptions = {
 	inject: [ConfigService],
 	useFactory: (cfg: ConfigService): TypeOrmModuleOptions => ({

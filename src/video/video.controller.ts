@@ -96,16 +96,16 @@ export class VideoController {
 	@ApiForbiddenResponse()
 	@UsePipes(new ValidationPipe())
 	@UseGuards(JwtGuard)
-	@Put(':title')
-	async updateVideo(@Req() req: UserRequest, @Body() body: VideoInput, @Param('title') title: string) {
+	@Put(':id')
+	async updateVideo(@Req() req: UserRequest, @Body() body: VideoInput, @Param('id') id: number) {
 		const user = req.user;
 
-		return await this.videoService.updateVideo(body, title, user);
+		return await this.videoService.updateVideo(body, id, user);
 	}
 
-	@Get('v/:videoTitle')
-	async getVideoDtoByTitle(@Param('videoTitle') title: string) {
-		return await this.videoService.getVideoByTitle(title);
+	@Get('v/:alias')
+	async getVideoDtoByTitle(@Param('alias') title: string) {
+		return await this.videoService.getVideoByAlias(title);
 	}
 
 	@ApiBearerAuth('Authorization')
@@ -122,9 +122,9 @@ export class VideoController {
 		return await this.videoService.deleteVideo(body);
 	}
 
-	@Get(':title')
-	async getVideoByTitle(@Param('title') title: string, @Res() res) {
-		const video = await this.videoService.getVideoByTitle(title);
+	@Get('t/:id')
+	async getVideoByTitle(@Param('id') id: number, @Res() res) {
+		const video = await this.videoService.getVideoByTitle(id);
 
 		return res.sendFile(resolvePath(video.video.path));
 	}

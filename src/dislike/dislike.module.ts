@@ -1,9 +1,10 @@
 import { Module } from '@nestjs/common';
-import { DislikeController } from './dislike.controller';
+
 import { ConfigService, typeOrmFeaturesFactory } from '@shared';
 import { JwtService } from '@nestjs/jwt';
 import { DislikeService } from './dislike.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { DislikeController } from './dislike.controller';
 
 @Module({
 	controllers: [DislikeController],

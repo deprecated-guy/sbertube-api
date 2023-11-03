@@ -43,7 +43,7 @@ dotenv.config();
 				},
 			},
 			defaults: {
-				from: '"No Reply" <emaple@example.com>',
+				from: '"No Reply" <>',
 			},
 			template: {
 				dir: path.resolve(process.cwd(), 'emails'),

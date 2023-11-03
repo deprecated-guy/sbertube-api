@@ -5,6 +5,7 @@ import { VideoService } from '../../video/video.service';
 import { CommentService } from '../../comment/comment.service';
 import { ConfigService } from '@shared';
 import { LikeService } from '../../like/like.service';
+import { DislikeService } from '../../dislike/dislike.service';
 
 export const ServiceMap: Map<string, Provider> = new Map<string, Provider>([
 	['JWT', JwtService],
@@ -13,4 +14,5 @@ export const ServiceMap: Map<string, Provider> = new Map<string, Provider>([
 	['Comment', CommentService],
 	['Config', ConfigService],
 	['like', LikeService],
+	['Dislike', DislikeService],
 ]);
