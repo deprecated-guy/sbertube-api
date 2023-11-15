@@ -12,6 +12,7 @@ export class Video {
 	alias: string;
 	likes: LikeDto[];
 	isLiked: boolean;
+	uploadedAt: string;
 }
 
 export class VideoInput {

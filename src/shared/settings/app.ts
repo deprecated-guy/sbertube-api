@@ -33,7 +33,8 @@ export const DBConnection: TypeOrmModuleOptions = {
 	password: config.dbPassword,
 	entities: ['dist/**/*.entity.js'],
 	host: config.dbHost,
-	synchronize: !!config.synchronize,
+	synchronize: true,
+	dropSchema: false,
 };
 
 export const jwtSettings: JwtModuleOptions = {

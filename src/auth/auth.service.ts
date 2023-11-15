@@ -18,6 +18,8 @@ export class AuthService {
 			},
 		});
 
+		console.log(userData);
+
 		const payload = {
 			username: userData.username,
 			email: userData.email,
@@ -41,6 +43,8 @@ export class AuthService {
 		user.comments = [];
 		user.registerDate = new Date().toISOString();
 		user.timeAfterRegister = '';
+		user.bannerBackgroundImage = '';
+		user.avatarBackgroundImage = '';
 		user.activationCode = this.mailService.generateCode();
 		user.avatarBackground = hexify(randomColorHelper(103, 255));
 		user.bannerBackground = hexify(randomColorHelper(100, 255));
@@ -50,8 +54,10 @@ export class AuthService {
 
 	async verifyUser(id: number, code: string) {
 		const user = await this.userRepo.findOne({ where: { id } });
+		console.log(id);
 		if (user.activationCode === +code) {
 			user.isActivated = true;
+			console.log(user);
 			return this.makeDto(user);
 		} else throw new HttpException('Incorrect code', HttpStatus.BAD_REQUEST);
 	}

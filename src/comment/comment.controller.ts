@@ -6,6 +6,7 @@ import {
 	Param,
 	Post,
 	Put,
+	Query,
 	Req,
 	UseGuards,
 	UsePipes,
@@ -75,8 +76,13 @@ export class CommentController {
 	@UseGuards(JwtGuard)
 	@UsePipes(new ValidationPipe())
 	@Delete(':id')
-	deleteComment(@Req() req: UserRequest, @Param('id') id: number, input: CommentInput) {
-		return from(this.commentService.delete(id, input.videoId));
+	deleteComment(@Req() req: UserRequest, @Param('id') id: number, @Query('videoId') videoId: number) {
+		return from(this.commentService.delete(id, videoId));
+	}
+
+	@Get(':videoId')
+	async getCommentsByVideId(@Param('videoId') videoId: number) {
+		return await this.commentService.getByVideoId(videoId);
 	}
 
 	constructor(private commentService: CommentService) {}

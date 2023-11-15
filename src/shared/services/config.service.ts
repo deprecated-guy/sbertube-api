@@ -12,4 +12,8 @@ export class ConfigService {
 	public dropSchema = process.env.DROPSCHEMA;
 	public synchronize = process.env.SYNCHROMIZE;
 	public migrationsRun = process.env.MIGRATIONS_RUN;
+	public smtpPort = process.env.SMTP_PORT;
+	public smtpHost = process.env.SMTP_HOST;
+	public smtpUsername = process.env.SMTP_LOGIN;
+	public smtpPassword = process.env.SMTP_PASSWORD;
 }

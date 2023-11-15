@@ -78,6 +78,15 @@ export class UserController {
 		return await this.userService.getCurrentUser(req.user);
 	}
 
+	@ApiTags('Get User By Username')
+	@ApiForbiddenResponse()
+	@UsePipes(new ValidationPipe())
+	@Get(':username')
+	async getUser(@Param('username') username: string) {
+		console.log(username);
+		return await this.userService.getOneUserByUsername(username);
+	}
+
 	@ApiTags('Upload UserBanner  Background Image')
 	@ApiBearerAuth('Authorization')
 	@ApiForbiddenResponse()
@@ -85,7 +94,7 @@ export class UserController {
 	@UseInterceptors(
 		FileInterceptor('file', {
 			storage: diskStorage({
-				destination: './static/video',
+				destination: './static/images/user/banner',
 				filename(req, file: Express.Multer.File, callback: (error: Error | null, filename: string) => void) {
 					const filename = path.parse(file.originalname).name.replace(/./g, '') + uuid();
 
@@ -101,14 +110,14 @@ export class UserController {
 	async updateBannerImage(@Req() req: UserRequest, @UploadedFile() file: Express.Multer.File) {
 		return await this.userService.updateUserBannerImage(req.user, file.filename);
 	}
-	@ApiTags('Upload User Avatart  Background Image')
+	@ApiTags('Upload User Avatar  Background Image')
 	@ApiBearerAuth('Authorization')
 	@ApiForbiddenResponse()
 	@UsePipes(new ValidationPipe())
 	@UseInterceptors(
 		FileInterceptor('file', {
 			storage: diskStorage({
-				destination: './static/video',
+				destination: './static/images/user/avatar',
 				filename(req, file: Express.Multer.File, callback: (error: Error | null, filename: string) => void) {
 					const filename = path.parse(file.originalname).name.replace(/./g, '') + uuid();
 
@@ -133,14 +142,6 @@ export class UserController {
 	@Get('images/avatar/:name')
 	getAvatarImage(@Param('name') name: string, @Res() res: Response) {
 		return res.sendFile(path.resolve(process.cwd(), 'static', 'images', 'avatar', name));
-	}
-
-	@ApiTags('Get User By Username')
-	@ApiForbiddenResponse()
-	@UsePipes(new ValidationPipe())
-	@Get(':username')
-	async getUser(@Param('username') username: string) {
-		return await this.userService.getOneUserByUsername(username);
 	}
 
 	constructor(private userService: UserService) {}

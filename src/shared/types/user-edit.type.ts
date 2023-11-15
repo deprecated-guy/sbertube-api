@@ -15,4 +15,7 @@ export class UserEdit {
 
 	@ApiProperty({ description: 'Avatar Background' })
 	avatarBackground: string;
+
+	@ApiProperty({ description: 'Avatar Background' })
+	bio: string;
 }

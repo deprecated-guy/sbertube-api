@@ -16,6 +16,7 @@ export interface UserResponse {
 	email: string;
 	token: string;
 	registerDate: string;
+	bio: string;
 	registerTime: bigint;
 	timeAfterRegister: string;
 	watchedVideos: VideoDto[];

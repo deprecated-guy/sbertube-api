@@ -4,7 +4,6 @@ import { AuthService } from './auth.service';
 import { ApiBody, ApiForbiddenResponse, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { EmailService } from '../email.service';
 import { UserEntity } from '@entity';
-import { Code } from '../shared/types/code.type';
 
 export const user = {} as UserEntity;
 
@@ -52,7 +51,6 @@ export class AuthController {
 	@UsePipes(new ValidationPipe())
 	@ApiResponse({ status: 200, description: 'OK', type: User })
 	async register(@Body() body: UserRegister) {
-		console.log(body);
 		const { user } = await this.authService.createUser(body);
 		await this.emailService.sendEmail(user.username, body.email, user.activationCode);
 		return {
@@ -62,9 +60,10 @@ export class AuthController {
 	}
 
 	@Post('activate/:id')
-	async activateAccount(@Body() code: Code, @Param('id') id: number) {
-		console.log(code);
-		console.log(id);
+	async activateAccount(@Body() code: { code: string }, @Param('id') id: number) {
+		console.log('code', code);
+		console.log();
+		console.log('uid', id);
 		return await this.authService.verifyUser(id, code.code);
 	}
 	constructor(

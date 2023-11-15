@@ -27,6 +27,7 @@ export class UserService {
 			username: data.username !== '' ? data.username : user.username,
 			bannerBackground: data.bannerBackground !== '' ? data.bannerBackground : user.bannerBackground,
 			avatarBackground: data.avatarBackground !== '' ? data.avatarBackground : user.avatarBackground,
+			bio: data.bio !== '' ? data.bio : user.bio,
 			password: !checked ? await hash(data.password, 10) : user.password,
 			checkPassword: !checked ? await hash(data.password, 10) : user.checkPassword,
 		};
@@ -95,6 +96,7 @@ export class UserService {
 
 		return {
 			user: {
+				bio: dto.bio,
 				bannerBackgroundImage: dto.bannerBackgroundImage,
 				avatarBackgroundImage: dto.avatarBackgroundImage,
 				bannerBackground: dto.bannerBackground,

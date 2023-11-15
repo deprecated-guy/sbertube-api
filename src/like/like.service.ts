@@ -9,12 +9,12 @@ export class LikeService {
 	public async likeVideo(user: User, id: number) {
 		const author = await this.userRepo.findOne({
 			where: { id: user.user.id },
-			relations: ['likes'],
+			relations: ['likes', 'videos'],
 		});
 
 		const video = await this.videoRepo.findOne({
 			where: { id: id },
-			relations: ['likes', 'comments'],
+			relations: ['likes'],
 		});
 
 		if (!user) throw new HttpException('NotAuthorized', HttpStatus.UNAUTHORIZED);
@@ -38,7 +38,7 @@ export class LikeService {
 	public async likeComment(user: User, id: number) {
 		const author = await this.userRepo.findOne({
 			where: { id: user.user.id },
-			relations: ['likes'],
+			relations: ['comments', 'likes'],
 		});
 
 		const comment = await this.commentRepo.findOne({

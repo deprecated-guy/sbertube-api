@@ -2,7 +2,7 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UserEntity, VideoEntity } from '@entity';
 import { Repository } from 'typeorm';
-import { User, Video, VideoInput, VideoDto, CommentDto, UserDto, LikeDto, DislikeDto } from '@shared';
+import { User, VideoInput, VideoDto, CommentDto, UserDto, LikeDto, DislikeDto } from '@shared';
 import getVideoDurationInSeconds from 'get-video-duration';
 
 import * as path from 'path';
@@ -33,6 +33,7 @@ export class VideoService {
 			newFile.comments = [];
 			newFile.isViewed = false;
 			newFile.alias = file.filename.replace(ext, '');
+			newFile.uploadedAt = new Date().toISOString();
 			newFile.author = user;
 			newFile.likes = [];
 			newFile.likesCount = 0;
@@ -100,6 +101,7 @@ export class VideoService {
 		if (!isMatch) throw new HttpException('incorrect credentials', HttpStatus.UNPROCESSABLE_ENTITY);
 
 		const updatedVideo: VideoEntity = {
+			uploadedAt: file.uploadedAt,
 			alias: file.alias,
 			isDisliked: file.isDisliked,
 			dislikesCount: file.dislikesCount,
@@ -132,15 +134,18 @@ export class VideoService {
 		return this.makeDto(updatedVideo);
 	}
 
-	public async deleteVideo(body: Video) {
-		const video = await this.videoRepo.findOne({
+	public async deleteVideo(id: number, user: User) {
+		const author = await this.userRepo.findOne({ where: { id: user.user.id }, relations: ['videos'] });
+
+		const findVideo = await this.videoRepo.findOne({
 			where: {
-				title: body.title,
+				id,
 			},
-			relations: ['author', 'comments', 'likes'],
+			relations: ['author', 'comments', 'likes', 'dislikes'],
 		});
-		if (!video) throw new HttpException('Not found', HttpStatus.NOT_FOUND);
-		await this.videoRepo.remove(video);
+		if (!findVideo) throw new HttpException('Not found', HttpStatus.NOT_FOUND);
+		author.videos.filter((video) => video.id !== id);
+		await this.videoRepo.remove(findVideo);
 	}
 
 	public async getVideoByTitle(id: number): Promise<VideoDto> {
@@ -157,7 +162,7 @@ export class VideoService {
 	public async getVideoByAlias(alias: string): Promise<VideoDto> {
 		const video = await this.videoRepo.findOne({
 			where: { alias },
-			relations: ['author', 'comments', 'comments.author', 'likes'],
+			relations: ['author', 'comments', 'likes'],
 		});
 
 		if (!video) throw new HttpException('Not Found', HttpStatus.NOT_FOUND);
@@ -171,15 +176,16 @@ export class VideoService {
 		};
 
 		const comments: CommentDto[] = entity.comments.map((c): CommentDto => {
+			console.log(c.commentedVideo);
 			return {
 				comment: {
-					...entity,
-					dislikes: entity.dislikes as unknown as DislikeDto[],
-					isLiked: entity.isLiked,
+					...c,
+					dislikes: c.dislikes as unknown as DislikeDto[],
+					isLiked: c.isLiked,
 					isEdited: c.isEdited,
 					createdAt: c.createdAt,
 					editedAt: c.editedAt,
-					likes: entity.likes as unknown as LikeDto[],
+					likes: c.likes as unknown as LikeDto[],
 
 					body: c.body,
 					likesCount: c.likesCount,
@@ -190,11 +196,10 @@ export class VideoService {
 			};
 		});
 
-		console.log(comments);
-
 		return {
 			video: {
 				...entity,
+				uploadedAt: entity.uploadedAt,
 				isLiked: entity.isLiked,
 				likes: entity.likes as unknown as LikeDto[],
 				path: entity.path,
@@ -207,4 +212,10 @@ export class VideoService {
 		@InjectRepository(VideoEntity) private videoRepo: Repository<VideoEntity>,
 		@InjectRepository(UserEntity) private userRepo: Repository<UserEntity>,
 	) {}
+
+	async getUserVideos(username: string) {
+		const user = await this.userRepo.findOne({ where: { username }, relations: ['videos'] });
+
+		return user.videos.map((video) => this.makeDto(video));
+	}
 }

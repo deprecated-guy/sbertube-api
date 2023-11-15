@@ -10,7 +10,6 @@ export class DislikeController {
 	@UseGuards(JwtGuard)
 	@Post('dislikeVideo/:id')
 	async dislikeVideo(@Req() user: User, @Param(':id') id: number) {
-		await this.dislikeService.dislikeVideo(user, id);
 		return await this.dislikeService.dislikeVideo(user, id);
 	}
 

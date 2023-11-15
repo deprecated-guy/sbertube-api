@@ -17,10 +17,8 @@ export class CommentService {
 		);
 	}
 	public async createComment(comment: CommentInput, user: User) {
-		const newComment = await this.commentRepo.create(comment);
-		const video = await this.videoRepo.findOneBy({
-			id: comment.videoId,
-		});
+		const newComment = this.commentRepo.create(comment);
+		const video = await this.videoRepo.findOne({ where: { id: comment.videoId }, relations: ['comments'] });
 
 		const author = await this.userRepo.findOneBy({
 			id: user.user.id,
@@ -32,6 +30,7 @@ export class CommentService {
 		newComment.author = author;
 		newComment.likesCount = 0;
 		newComment.dislikesCount = 0;
+		console.log(newComment);
 
 		return this.makeDto(await this.commentRepo.save(newComment));
 	}
@@ -89,4 +88,10 @@ export class CommentService {
 		@InjectRepository(UserEntity) private userRepo: Repository<UserEntity>,
 		@InjectRepository(VideoEntity) private videoRepo: Repository<VideoEntity>,
 	) {}
+
+	async getByVideoId(videoId: number) {
+		const video = await this.videoRepo.findOne({ where: { id: videoId }, relations: ['comments'] });
+
+		return video.comments.map((c) => this.makeDto(c));
+	}
 }

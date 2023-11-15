@@ -17,7 +17,7 @@ import {
 } from '@nestjs/common';
 
 import { FileInterceptor } from '@nestjs/platform-express';
-import { Video, editVideoSchema, JwtGuard, uploadVideoScheme, VideoDto, VideoInput, UserRequest } from '@shared';
+import { editVideoSchema, JwtGuard, uploadVideoScheme, VideoDto, VideoInput, UserRequest } from '@shared';
 import { VideoService } from './video.service';
 
 import {
@@ -95,7 +95,6 @@ export class VideoController {
 	@ApiResponse({ type: VideoDto })
 	@ApiForbiddenResponse()
 	@UsePipes(new ValidationPipe())
-	@UseGuards(JwtGuard)
 	@Put(':id')
 	async updateVideo(@Req() req: UserRequest, @Body() body: VideoInput, @Param('id') id: number) {
 		const user = req.user;
@@ -105,6 +104,7 @@ export class VideoController {
 
 	@Get('v/:alias')
 	async getVideoDtoByTitle(@Param('alias') title: string) {
+		console.log(await this.videoService.getVideoByAlias(title));
 		return await this.videoService.getVideoByAlias(title);
 	}
 
@@ -117,16 +117,38 @@ export class VideoController {
 	@UsePipes(new ValidationPipe())
 	@ApiForbiddenResponse()
 	@UseGuards(JwtGuard)
-	@Delete()
-	async deleteVideo(@Req() req: UserRequest, @Body() body: Video) {
-		return await this.videoService.deleteVideo(body);
+	@Delete('id')
+	async deleteVideo(@Req() req: UserRequest, @Param('id') id: number) {
+		return await this.videoService.deleteVideo(id, req.user);
 	}
 
+	@ApiBearerAuth('Authorization')
+	@ApiHeader({
+		name: 'Authorization',
+		description: 'Bearer Token',
+	})
+	@ApiTags('Delete Video')
+	@UsePipes(new ValidationPipe())
+	@ApiForbiddenResponse()
 	@Get('t/:id')
 	async getVideoByTitle(@Param('id') id: number, @Res() res) {
 		const video = await this.videoService.getVideoByTitle(id);
 
 		return res.sendFile(resolvePath(video.video.path));
+	}
+
+	@ApiBearerAuth('Authorization')
+	@ApiHeader({
+		name: 'Authorization',
+		description: 'Bearer Token',
+	})
+	@ApiTags('Get User videos')
+	@UsePipes(new ValidationPipe())
+	@ApiForbiddenResponse()
+	@UseGuards(JwtGuard)
+	@Get('/author/:username')
+	async getUserVideos(@Req() req: UserRequest, @Param('username') username: string) {
+		return await this.videoService.getUserVideos(username);
 	}
 
 	constructor(private videoService: VideoService) {}

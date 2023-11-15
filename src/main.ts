@@ -7,7 +7,7 @@ import { NestFactory } from '@nestjs/core/nest-factory';
 async function bootstrap() {
 	const app: NestExpressApplication = await NestFactory.create<NestExpressApplication>(AppModule);
 
-	await app.enableCors({
+	app.enableCors({
 		allowedHeaders: '*',
 		origin: '*',
 	});

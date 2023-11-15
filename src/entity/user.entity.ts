@@ -21,6 +21,9 @@ export class UserEntity {
 	@Column()
 	checkPassword: string;
 
+	@Column({ default: 'Hello World' })
+	bio: string;
+
 	@Column()
 	token: string;
 
@@ -56,7 +59,7 @@ export class UserEntity {
 	@Column('')
 	bannerBackground: string;
 
-	@Column('')
+	@Column({ default: '' })
 	bannerBackgroundImage: string;
 
 	@Column('')

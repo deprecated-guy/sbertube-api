@@ -55,4 +55,7 @@ export class VideoEntity {
 
 	@Column({ default: 0 })
 	dislikesCount: number;
+
+	@Column('')
+	uploadedAt: string;
 }
